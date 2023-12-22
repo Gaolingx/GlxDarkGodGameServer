@@ -23,7 +23,7 @@ public class DBMgr {
     private MySqlConnection conn;
 
     public void Init() {
-        conn = new MySqlConnection("server=localhost;User Id = root;passwrod=;Database=darkgod;Charset = utf8");
+        conn = new MySqlConnection("server=localhost;User Id = root;password=;Database=darkgod;Charset = utf8");
         conn.Open();
         PECommon.Log("DBMgr Init Done.");
 

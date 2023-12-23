@@ -80,7 +80,7 @@ public class NetSvc
         switch ((CMD)pack.msg.cmd) 
         {
             case CMD.RspLogin:
-                LoginSys.Instance.ReqLogin(pack);
+                LoginSys.Instance.ReqLogin(pack);  //客户端发送一条请求登录的消息，会传入NetSvc，然后通过ReqLogin()分发到LoginSys中，
                 break;
         }
     }

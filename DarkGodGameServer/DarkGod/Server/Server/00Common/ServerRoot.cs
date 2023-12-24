@@ -16,11 +16,13 @@ public class ServerRoot
         }
     }
 
+    //初始化
     public void Init()
     {
         //数据层TODO
 
         //服务层
+        CacheSvc.Instance.Init();
         NetSvc.Instance.Init();
 
         //业务系统层

@@ -18,13 +18,16 @@ public class LoginSys
         }
     }
 
+    private CacheSvc? cacheSvc = null;
     public void Init()
     {
+        cacheSvc = CacheSvc.Instance;
         PECommon.Log("LoginSys Init Done.");
     }
 
     public void ReqLogin(MsgPack pack)
     {
+        ReqLogin data = pack.msg.reqLogin;
         //当前账号是否已经上线
         //要判断一个账号是否上线，我们可以从一个缓存里面获取当前在系统里面获取当前服务器上线了哪些玩家，判断有没有这个账号，
         //因此我们需要创建一个缓存层。
@@ -37,11 +40,20 @@ public class LoginSys
             }
         };
 
-        //已上线：返回错误信息
-        //未上线：
-        //账号是否存在
-        //存在，检测密码
-        //不存在，创建默认的账号密码
+        //这里可以使用一种叫做错误码的概念实现它，与CMD同样，属于枚举类型
+        if (cacheSvc.IsAcctOnline(data.acct))
+        {
+            //已上线：返回错误信息，表示此次登录无效，同时通知客户端
+            msg.err = (int)ErrorCode.AcctIsOnline;
+        }
+        else
+        {
+
+            //未上线：从缓存拉取数据
+            //账号是否存在
+            //存在，检测密码
+            //不存在，创建默认的账号密码
+        }
 
         //处理完上述逻辑后，回应客户端
         //你需要先拿到client与client的session才能发消息

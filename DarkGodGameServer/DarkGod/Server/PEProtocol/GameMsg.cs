@@ -23,8 +23,30 @@ namespace PEProtocol
     [Serializable]
     public class RspLogin
     {
-        //TODO
+        public PlayerData? playerData;
     }
+
+    //定义账号相关数据
+    [Serializable]
+    public class PlayerData
+    {
+        public int id;
+        public string? name;
+        public int lv;
+        public int exp;
+        public int power;
+        public int coin;
+        public int diamond;
+        //TOADD
+    }
+
+    public enum ErrorCode
+    {
+        None = 0,  //没有错误
+
+        AcctIsOnline, //账号已经上线
+    }
+
     public enum CMD
     {
         None = 0,

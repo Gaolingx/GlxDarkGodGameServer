@@ -34,10 +34,7 @@ public class LoginSys
         GameMsg msg = new GameMsg
         {
             cmd = (int)CMD.RspLogin,
-            rspLogin = new RspLogin
-            {
 
-            }
         };
 
         //这里可以使用一种叫做错误码的概念实现它，与CMD同样，属于枚举类型
@@ -48,16 +45,33 @@ public class LoginSys
         }
         else
         {
-
             //未上线：从缓存拉取数据
             //账号是否存在
-            //存在，检测密码
-            //不存在，创建默认的账号密码
+            PlayerData pd = cacheSvc.GetPlayerData(data.acct, data.pass);
+            //判断当前数据是否获取到
+            if(pd ==null)
+            {
+                //存在，密码错误
+                msg.err = (int)ErrorCode.WrongPass;//如果为空说明密码错误，返回错误码
+            }
+            else
+            {
+                //不存在，创建默认的账号密码（账号不存在），或者将当前获取到的有效的账号数据返回给客户端（账号存在）
+                msg.rspLogin = new RspLogin
+                {
+                    playerData = pd
+                };
+
+                //缓存账号数据
+                //获取到有效账号数据之后，将它缓存到缓存层内，避免重复登录造成数据冲突
+                cacheSvc.AcctOnline(data.acct, pack.session, pd);
+            }
+
+           
         }
 
         //处理完上述逻辑后，回应客户端
         //你需要先拿到client与client的session才能发消息
-
         pack.session.SendMsg(msg);
 
     }

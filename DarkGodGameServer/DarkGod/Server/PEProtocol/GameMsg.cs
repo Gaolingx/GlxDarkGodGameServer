@@ -45,6 +45,7 @@ namespace PEProtocol
         None = 0,  //没有错误
 
         AcctIsOnline, //账号已经上线
+        WrongPass,  //密码错误
     }
 
     public enum CMD

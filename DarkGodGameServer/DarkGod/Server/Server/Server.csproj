@@ -12,6 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="MySql.Data">
+      <HintPath>..\Libs\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="PESocket">
       <HintPath>..\Libs\PESocket.dll</HintPath>
     </Reference>

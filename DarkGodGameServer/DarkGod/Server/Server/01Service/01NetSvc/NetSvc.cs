@@ -17,7 +17,7 @@ public class MsgPack
 
 public class NetSvc
 {
-    private static NetSvc instance = null;
+    private static NetSvc? instance = null;
     public static NetSvc Instance
     {
         get

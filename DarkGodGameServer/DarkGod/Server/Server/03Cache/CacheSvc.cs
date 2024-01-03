@@ -16,12 +16,14 @@ public class CacheSvc
             return instance;
         }
     }
+    private DBMgr? dbMgr;
 
     //定义一个字典，用于存储当前上线的账号与与它对应的ServerSession连接。
     private Dictionary<string, ServerSession> onLineAcctDic = new Dictionary<string,ServerSession>();
     private Dictionary<ServerSession, PlayerData> onLineSessionDic = new Dictionary<ServerSession,PlayerData>();
     public void Init()
     {
+        dbMgr = DBMgr.Instance;
         PECommon.Log("CacheSvc Init Done.");
     }
 
@@ -35,11 +37,10 @@ public class CacheSvc
     /// 根据账号密码返回对应账号数据，密码错误返回null，账号不存在则默认创建新账号
     /// </summary>
     //用于获取当前PlayerData
-    public PlayerData GetPlayerData(string acct, string pass)
+    public PlayerData? GetPlayerData(string acct, string pass)
     {
-        //TODO
         //从数据库中查找账号数据
-        return null;
+        return dbMgr.QueryPlayerData(acct, pass);
     }
 
     /// <summary>

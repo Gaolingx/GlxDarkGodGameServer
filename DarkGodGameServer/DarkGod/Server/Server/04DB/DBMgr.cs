@@ -25,6 +25,7 @@ public class DBMgr
     public void Init()
     {
         DBconn = new MySqlConnection("server=localhost;User Id = root;password=Gao123456;Database=darkgod;Charset = utf8mb3");
+        DBconn.Open();
         PECommon.Log("DBMgr Init Done.");
     }
 
@@ -71,8 +72,12 @@ public class DBMgr
         }
 
         //执行reader = cmd.ExecuteReader();时，如果数据库不存在玩家account，我们就需要默认为玩家创建一个新的账号
-        finally
+        finally  //便于捕获异常
         {
+            if (reader != null)
+            {
+                reader.Close();
+            }
             if (isNew == true)
             {
                 //不存在账号数据，创建新的默认账号数据，并返回
@@ -97,6 +102,30 @@ public class DBMgr
     //将新创建的账号数据插入到数据库中
     private int InsertNewAcctData(string acct, string pass, PlayerData pd)
     {
+        int id = -1;
+        try
+        {
+            MySqlCommand cmd = new MySqlCommand(
+                "insert into account set acct=@acct,pass =@pass,name=@name,level=@level,exp=@exp,power=@power,coin=@coin,diamond=@diamond", DBconn);
 
+            cmd.Parameters.AddWithValue("acct", acct);
+            cmd.Parameters.AddWithValue("pass", pass);
+            cmd.Parameters.AddWithValue("name", pd.name);
+            cmd.Parameters.AddWithValue("level", pd.lv);
+            cmd.Parameters.AddWithValue("exp", pd.exp);
+            cmd.Parameters.AddWithValue("power", pd.power);
+            cmd.Parameters.AddWithValue("coin", pd.coin);
+            cmd.Parameters.AddWithValue("diamond", pd.diamond);
+
+            //TOADD
+            cmd.ExecuteNonQuery();
+            id = (int)cmd.LastInsertedId;
+        }
+        catch (Exception e)
+        {
+            PECommon.Log("Insert PlayerData Error:" + e, PELogType.Error);
+        }
+
+        return id;
     }
 }

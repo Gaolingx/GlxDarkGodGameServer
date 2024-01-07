@@ -82,6 +82,9 @@ public class NetSvc
             case CMD.RspLogin:
                 LoginSys.Instance.ReqLogin(pack);  //客户端发送一条请求登录的消息，会传入NetSvc，然后通过ReqLogin()分发到LoginSys中，
                 break;
+            case CMD.ReqRename:
+                LoginSys.Instance.ReqRename(pack);
+                break;
         }
     }
 }

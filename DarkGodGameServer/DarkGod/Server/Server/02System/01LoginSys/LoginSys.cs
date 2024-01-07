@@ -66,13 +66,16 @@ public class LoginSys
                 //获取到有效账号数据之后，将它缓存到缓存层内，避免重复登录造成数据冲突
                 cacheSvc.AcctOnline(data.acct, pack.session, pd);
             }
-
            
         }
 
         //处理完上述逻辑后，回应客户端
         //你需要先拿到client与client的session才能发消息
         pack.session.SendMsg(msg);
+    }
+
+    public void ReqRename(MsgPack pack)
+    {
 
     }
 }

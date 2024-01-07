@@ -9,7 +9,7 @@
 using PENet;
 using PEProtocol;
 
-public enum LogType {
+public enum PELogType {
     Log = 0,
     Warn = 1,
     Error = 2,
@@ -19,7 +19,7 @@ public enum LogType {
 public class PECommon {
 
 
-    public static void Log(string msg = "", LogType tp = LogType.Log) {
+    public static void Log(string msg = "", PELogType tp = PELogType.Log) {
         LogLevel lv = (LogLevel)tp;
         PETool.LogMsg(msg, lv);
     }

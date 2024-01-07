@@ -32,7 +32,7 @@ public class CfgSvc {
     private Dictionary<int, GuideCfg> guideDic = new Dictionary<int, GuideCfg>();
     private void InitGuideCfg() {
         XmlDocument doc = new XmlDocument();
-        doc.Load(@"D:\SyncTuts\DarkGod\Client\Assets\Resources\ResCfgs\guide.xml");
+        doc.Load(@"E:\reBuild\DarkGodGameServer\DarkGod\Server\ServerCfg\guide.xml");     //根据配置文件本地路径修改
 
         XmlNodeList nodLst = doc.SelectSingleNode("root").ChildNodes;
 
@@ -75,7 +75,7 @@ public class CfgSvc {
     private Dictionary<int, Dictionary<int, StrongCfg>> strongDic = new Dictionary<int, Dictionary<int, StrongCfg>>();
     private void InitStrongCfg() {
         XmlDocument doc = new XmlDocument();
-        doc.Load(@"D:\SyncTuts\DarkGod\Client\Assets\Resources\ResCfgs\strong.xml");
+        doc.Load(@"E:\reBuild\DarkGodGameServer\DarkGod\Server\ServerCfg\strong.xml");
 
         XmlNodeList nodLst = doc.SelectSingleNode("root").ChildNodes;
 
@@ -149,7 +149,7 @@ public class CfgSvc {
     private Dictionary<int, TaskRewardCfg> taskRewardDic = new Dictionary<int, TaskRewardCfg>();
     private void InitTaskRewrdCfg() {
         XmlDocument doc = new XmlDocument();
-        doc.Load(@"D:\SyncTuts\DarkGod\Client\Assets\Resources\ResCfgs\taskreward.xml");
+        doc.Load(@"E:\reBuild\DarkGodGameServer\DarkGod\Server\ServerCfg\taskreward.xml");
 
         XmlNodeList nodLst = doc.SelectSingleNode("root").ChildNodes;
 
@@ -195,7 +195,7 @@ public class CfgSvc {
     private Dictionary<int, MapCfg> mapDic = new Dictionary<int, MapCfg>();
     private void InitMapCfg() {
         XmlDocument doc = new XmlDocument();
-        doc.Load(@"D:\SyncTuts\DarkGod\Client\Assets\Resources\ResCfgs\map.xml");
+        doc.Load(@"E:\reBuild\DarkGodGameServer\DarkGod\Server\ServerCfg\map.xml");
 
         XmlNodeList nodLst = doc.SelectSingleNode("root").ChildNodes;
 

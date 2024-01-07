@@ -20,11 +20,11 @@ public class DBMgr {
             return instance;
         }
     }
-    private MySqlConnection conn;
+    private MySqlConnection DBconn;
 
     public void Init() {
-        conn = new MySqlConnection("server=localhost;User Id = root;password=Gao123456;Database=darkgod;Charset = utf8");
-        conn.Open();
+        DBconn = new MySqlConnection("server=localhost;User Id = root;password=Gao123456;Database=darkgod;Charset = utf8mb3");
+        DBconn.Open();
         PECommon.Log("DBMgr Init Done.");
 
         //QueryPlayerData("xxxx", "oooo");
@@ -36,7 +36,7 @@ public class DBMgr {
         PlayerData playerData = null;
         MySqlDataReader reader = null;
         try {
-            MySqlCommand cmd = new MySqlCommand("select * from account where acct = @acct", conn);
+            MySqlCommand cmd = new MySqlCommand("select * from account where acct = @acct", DBconn);
             cmd.Parameters.AddWithValue("acct", acct);
             reader = cmd.ExecuteReader();
             if (reader.Read()) {
@@ -81,7 +81,7 @@ public class DBMgr {
                             _strongArr[i] = starLv;
                         }
                         else {
-                            PECommon.Log("Parse Strong Data Error", LogType.Error);
+                            PECommon.Log("Parse Strong Data Error", PELogType.Error);
                         }
                     }
                     playerData.strongArr = _strongArr;
@@ -109,13 +109,13 @@ public class DBMgr {
             }
         }
         catch (Exception e) {
-            PECommon.Log("Query PlayerData By Acct&Pass Error:" + e, LogType.Error);
+            PECommon.Log("Query PlayerData By Acct&Pass Error:" + e, PELogType.Error);
         }
         finally {
             if (reader != null) {
                 reader.Close();
             }
-            if (isNew) {
+            if (isNew == true) {
                 //不存在账号数据，创建新的默认账号数据，并返回
                 playerData = new PlayerData {
                     id = -1,
@@ -163,7 +163,7 @@ public class DBMgr {
             MySqlCommand cmd = new MySqlCommand(
                 "insert into account set acct=@acct,pass =@pass,name=@name,level=@level,exp=@exp,power=@power,coin=@coin,diamond=@diamond," +
                 "crystal=@crystal,hp = @hp, ad = @ad, ap = @ap, addef = @addef, apdef = @apdef, dodge = @dodge, pierce = @pierce, critical = @critical," +
-                "guideid=@guideid,strong=@strong,time=@time,task=@task,fuben=@fuben", conn);
+                "guideid=@guideid,strong=@strong,time=@time,task=@task,fuben=@fuben", DBconn);
             cmd.Parameters.AddWithValue("acct", acct);
             cmd.Parameters.AddWithValue("pass", pass);
             cmd.Parameters.AddWithValue("name", pd.name);
@@ -207,7 +207,7 @@ public class DBMgr {
             id = (int)cmd.LastInsertedId;
         }
         catch (Exception e) {
-            PECommon.Log("Insert PlayerData Error:" + e, LogType.Error);
+            PECommon.Log("Insert PlayerData Error:" + e, PELogType.Error);
         }
         return id;
     }
@@ -216,7 +216,7 @@ public class DBMgr {
         bool exist = false;
         MySqlDataReader reader = null;
         try {
-            MySqlCommand cmd = new MySqlCommand("select * from account where name= @name", conn);
+            MySqlCommand cmd = new MySqlCommand("select * from account where name= @name", DBconn);
             cmd.Parameters.AddWithValue("name", name);
             reader = cmd.ExecuteReader();
             if (reader.Read()) {
@@ -224,7 +224,7 @@ public class DBMgr {
             }
         }
         catch (Exception e) {
-            PECommon.Log("Query Name State Error:" + e, LogType.Error);
+            PECommon.Log("Query Name State Error:" + e, PELogType.Error);
         }
         finally {
             if (reader != null) {
@@ -240,7 +240,7 @@ public class DBMgr {
             MySqlCommand cmd = new MySqlCommand(
             "update account set name=@name,level=@level,exp=@exp,power=@power,coin=@coin,diamond=@diamond,crystal=@crystal," +
             "hp = @hp, ad = @ad, ap = @ap, addef = @addef, apdef = @apdef, dodge = @dodge, pierce = @pierce, critical = @critical," +
-            "guideid=@guideid,strong=@strong,time=@time,task=@task,fuben=@fuben where id =@id", conn);
+            "guideid=@guideid,strong=@strong,time=@time,task=@task,fuben=@fuben where id =@id", DBconn);
             cmd.Parameters.AddWithValue("id", id);
             cmd.Parameters.AddWithValue("name", playerData.name);
             cmd.Parameters.AddWithValue("level", playerData.lv);
@@ -281,7 +281,7 @@ public class DBMgr {
             cmd.ExecuteNonQuery();
         }
         catch (Exception e) {
-            PECommon.Log("Update PlayerData Error:" + e, LogType.Error);
+            PECommon.Log("Update PlayerData Error:" + e, PELogType.Error);
             return false;
         }
         return true;

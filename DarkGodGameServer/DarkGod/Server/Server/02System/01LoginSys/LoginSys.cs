@@ -109,7 +109,7 @@ public class LoginSys {
         if (pd != null) {
             pd.time = timerSvc.GetNowTime();
             if (!cacheSvc.UpdatePlayerData(pd.id, pd)) {
-                PECommon.Log("Update offline time error", LogType.Error);
+                PECommon.Log("Update offline time error", PELogType.Error);
             }
             cacheSvc.AcctOffLine(session);
         }

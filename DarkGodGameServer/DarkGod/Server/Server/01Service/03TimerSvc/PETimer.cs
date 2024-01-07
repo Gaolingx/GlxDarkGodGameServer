@@ -16,7 +16,7 @@ public class PETimer {
     private static readonly string lockTid = "lockTid";
     private DateTime startDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
     private double nowTime;
-    private Timer srvTimer;
+    private System.Timers.Timer srvTimer;
     private int tid;
     private List<int> tidLst = new List<int>();
     private List<int> recTidLst = new List<int>();
@@ -44,7 +44,7 @@ public class PETimer {
         taskFrameLst.Clear();
 
         if (interval != 0) {
-            srvTimer = new Timer(interval) {
+            srvTimer = new System.Timers.Timer(interval) {
                 AutoReset = true
             };
 

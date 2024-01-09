@@ -53,5 +53,28 @@ public class CacheSvc
 
     }
 
+    public bool IsNameExist(string name)
+    {
+        return dbMgr.QueryNameData(name);
+    }
+
+    //从字典缓存中获取playerdata
+    public PlayerData? GetPlayerDataBySession(ServerSession session)
+    {
+        if(onLineSessionDic.TryGetValue(session,out PlayerData playerData))
+        {
+            return playerData;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public bool UpdatePlayerData(int id,PlayerData playerData)
+    {
+        //TODO
+        return true;
+    }
 
 }

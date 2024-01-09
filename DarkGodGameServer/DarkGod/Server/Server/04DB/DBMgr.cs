@@ -128,4 +128,33 @@ public class DBMgr
 
         return id;
     }
+
+    public bool QueryNameData(string name)
+    {
+        bool exist = false;
+        MySqlDataReader? reader = null;
+        try
+        {
+            MySqlCommand cmd = new MySqlCommand("select * from account where name= @name", DBconn);
+            cmd.Parameters.AddWithValue("name", name);
+            reader = cmd.ExecuteReader();
+            if (reader.Read())
+            {
+                exist = true;
+            }
+        }
+        catch (Exception e)
+        {
+            PECommon.Log("Query Name State Error:" + e, PELogType.Error);
+        }
+        finally
+        {
+            if (reader != null)
+            {
+                reader.Close();
+            }
+        }
+
+        return exist;
+    }
 }

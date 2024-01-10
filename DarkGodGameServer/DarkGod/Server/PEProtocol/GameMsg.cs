@@ -48,6 +48,7 @@ namespace PEProtocol
     {
         public string? name;
     }
+    [Serializable]
     public class RspRename
     {
         public string? name;

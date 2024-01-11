@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="8.2.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.1" />
     <PackageReference Include="System.IO" Version="4.3.0" />
@@ -23,9 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="MySql.Data">
-      <HintPath>..\Libs\MySql.Data.dll</HintPath>
-    </Reference>
     <Reference Include="PESocket">
       <HintPath>..\Libs\PESocket.dll</HintPath>
     </Reference>

@@ -1,7 +1,8 @@
-﻿using PEProtocol;
-using PENet;
+﻿//功能：网络会话连接
 
-//功能：网络会话连接
+using PENet;
+using PEProtocol;
+
 public class ServerSession : PESession<GameMsg>
 {
     protected override void OnConnected()
@@ -11,7 +12,7 @@ public class ServerSession : PESession<GameMsg>
 
     protected override void OnReciveMsg(GameMsg msg)
     {
-        PECommon.Log("RcvPack CMD:"+((CMD)msg.cmd).ToString());
+        PECommon.Log("RcvPack CMD:" + ((CMD)msg.cmd).ToString());
         NetSvc.Instance.AddMsgQue(this, msg);
     }
 

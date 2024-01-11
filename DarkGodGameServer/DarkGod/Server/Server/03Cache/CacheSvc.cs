@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿//功能：缓存层
+using System.Collections.Generic;
 using PEProtocol;
 
-//功能：缓存层
+
 public class CacheSvc
 {
-    private static CacheSvc? instance = null;
+    private static CacheSvc instance = null;
     public static CacheSvc Instance
     {
         get
@@ -16,11 +17,12 @@ public class CacheSvc
             return instance;
         }
     }
-    private DBMgr? dbMgr;
+    private DBMgr dbMgr;
 
     //定义一个字典，用于存储当前上线的账号与与它对应的ServerSession连接。
-    private Dictionary<string, ServerSession> onLineAcctDic = new Dictionary<string,ServerSession>();
-    private Dictionary<ServerSession, PlayerData> onLineSessionDic = new Dictionary<ServerSession,PlayerData>();
+    private Dictionary<string, ServerSession> onLineAcctDic = new Dictionary<string, ServerSession>();
+    private Dictionary<ServerSession, PlayerData> onLineSessionDic = new Dictionary<ServerSession, PlayerData>();
+
     public void Init()
     {
         dbMgr = DBMgr.Instance;
@@ -28,7 +30,7 @@ public class CacheSvc
     }
 
     //判断当前账号是否已经上线
-    public bool IsAcctOnline(string acct)
+    public bool IsAcctOnLine(string acct)
     {
         return onLineAcctDic.ContainsKey(acct);  //如果key存在说明账号在线，则返回true，否则返回false
     }
@@ -37,20 +39,19 @@ public class CacheSvc
     /// 根据账号密码返回对应账号数据，密码错误返回null，账号不存在则默认创建新账号
     /// </summary>
     //用于获取当前PlayerData
-    public PlayerData? GetPlayerData(string acct, string pass)
+    public PlayerData GetPlayerData(string acct, string pass)
     {
         //从数据库中查找账号数据
         return dbMgr.QueryPlayerData(acct, pass);
     }
 
     /// <summary>
-    /// 账号上线，缓存账号数据
+    /// 账号上线，缓存数据
     /// </summary>
     public void AcctOnline(string acct, ServerSession session, PlayerData playerData)
     {
         onLineAcctDic.Add(acct, session);
         onLineSessionDic.Add(session, playerData);
-
     }
 
     public bool IsNameExist(string name)
@@ -59,9 +60,9 @@ public class CacheSvc
     }
 
     //从字典缓存中获取playerdata
-    public PlayerData? GetPlayerDataBySession(ServerSession session)
+    public PlayerData GetPlayerDataBySession(ServerSession session)
     {
-        if(onLineSessionDic.TryGetValue(session,out PlayerData playerData))
+        if (onLineSessionDic.TryGetValue(session, out PlayerData playerData))
         {
             return playerData;
         }
@@ -71,9 +72,8 @@ public class CacheSvc
         }
     }
 
-    public bool UpdatePlayerData(int id,PlayerData playerData)
+    public bool UpdatePlayerData(int id, PlayerData playerData)
     {
-        return dbMgr.UpdatePlayerData(id,playerData);
+        return dbMgr.UpdatePlayerData(id, playerData);
     }
-
 }

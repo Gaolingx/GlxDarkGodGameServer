@@ -5,7 +5,7 @@ using PEProtocol;
 
 public class LoginSys
 {
-    private static LoginSys? instance = null;
+    private static LoginSys instance = null;
     public static LoginSys Instance
     {
         get
@@ -17,8 +17,8 @@ public class LoginSys
             return instance;
         }
     }
+    private CacheSvc cacheSvc = null;
 
-    private CacheSvc? cacheSvc = null;
     public void Init()
     {
         cacheSvc = CacheSvc.Instance;
@@ -33,12 +33,11 @@ public class LoginSys
         //因此我们需要创建一个缓存层。
         GameMsg msg = new GameMsg
         {
-            cmd = (int)CMD.RspLogin,
-
+            cmd = (int)CMD.RspLogin
         };
 
         //这里可以使用一种叫做错误码的概念实现它，与CMD同样，属于枚举类型
-        if (cacheSvc.IsAcctOnline(data.acct))
+        if (cacheSvc.IsAcctOnLine(data.acct))
         {
             //已上线：返回错误信息，表示此次登录无效，同时通知客户端
             msg.err = (int)ErrorCode.AcctIsOnline;
@@ -49,10 +48,10 @@ public class LoginSys
             //账号是否存在
             PlayerData pd = cacheSvc.GetPlayerData(data.acct, data.pass);
             //判断当前数据是否获取到
-            if(pd ==null)
+            if (pd ==null)
             {
                 //存在，密码错误
-                msg.err = (int)ErrorCode.WrongPass;//如果为空说明密码错误，返回错误码
+                msg.err = (int)ErrorCode.WrongPass; //如果为空说明密码错误，返回错误码
             }
             else
             {
@@ -83,7 +82,7 @@ public class LoginSys
         };
 
         //判断当前名字是否已经存在
-        if(cacheSvc.IsNameExist(data.name))
+        if (cacheSvc.IsNameExist(data.name))
         {
             //存在：返回错误码
             msg.err = (int)ErrorCode.NameIsExist;

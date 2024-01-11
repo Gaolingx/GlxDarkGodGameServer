@@ -6,8 +6,8 @@ using System.Collections.Generic;
 
 public class MsgPack
 {
-    public ServerSession? session;
-    public GameMsg? msg;
+    public ServerSession session;
+    public GameMsg msg;
     public MsgPack(ServerSession session, GameMsg msg)
     {
         this.session = session;
@@ -17,7 +17,7 @@ public class MsgPack
 
 public class NetSvc
 {
-    private static NetSvc? instance = null;
+    private static NetSvc instance = null;
     public static NetSvc Instance
     {
         get
@@ -64,23 +64,23 @@ public class NetSvc
     //通过while死循环，实现持续检测消息包队列内有没有网络消息，如果有则立即处理，反之则跳过，直至下次循环
     public void Update()
     {
-        if(msgPackQue.Count > 0)
+        if (msgPackQue.Count > 0)
         {
-            PECommon.Log("PackCount:"+msgPackQue.Count);
+            PECommon.Log("QueCount:" + msgPackQue.Count);
             lock (obj)
             {
-                    MsgPack pack = msgPackQue.Dequeue();
-                    HandOutMsg(pack);
+                MsgPack pack = msgPackQue.Dequeue();
+                HandOutMsg(pack);
             }
         }
     }
 
     private void HandOutMsg(MsgPack pack)
     {
-        switch ((CMD)pack.msg.cmd) 
+        switch ((CMD)pack.msg.cmd)
         {
-            case CMD.RspLogin:
-                LoginSys.Instance.ReqLogin(pack);  //客户端发送一条请求登录的消息，会传入NetSvc，然后通过ReqLogin()分发到LoginSys中，
+            case CMD.ReqLogin:
+                LoginSys.Instance.ReqLogin(pack);
                 break;
             case CMD.ReqRename:
                 LoginSys.Instance.ReqRename(pack);

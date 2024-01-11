@@ -1,7 +1,7 @@
 ﻿//功能：客户端服务端共用工具类
 using PENet;
 
-public enum LogType
+public enum PELogType
 {
     Log = 0,
     Warn = 1,
@@ -13,7 +13,7 @@ public class PECommon
 {
 
 
-    public static void Log(string msg = "", LogType tp = LogType.Log)
+    public static void Log(string msg = "", PELogType tp = PELogType.Log)
     {
         LogLevel lv = (LogLevel)tp;
         PETool.LogMsg(msg, lv);

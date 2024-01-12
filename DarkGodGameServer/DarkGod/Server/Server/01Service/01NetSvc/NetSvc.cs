@@ -61,7 +61,7 @@ public class NetSvc
         }
     }
 
-    //通过while死循环，实现持续检测消息包队列内有没有网络消息，如果有则立即处理，反之则跳过，直至下次循环
+    //通过while死循环，持续检测消息包队列内有没有网络消息，如果有则将消息分发到各个业务系统中，反之则跳过，直至下次循环
     public void Update()
     {
         if (msgPackQue.Count > 0)

@@ -1,6 +1,6 @@
 ﻿
 
-//功能：登陆业务系统
+//功能：登陆业务系统，负责处理登录和重命名的相关逻辑
 using PEProtocol;
 
 public class LoginSys
@@ -84,7 +84,7 @@ public class LoginSys
         //判断当前名字是否已经存在
         if (cacheSvc.IsNameExist(data.name))
         {
-            //存在：返回错误码
+            //存在：返回错误码，让玩家重新选择名字
             msg.err = (int)ErrorCode.NameIsExist;
         }
         else

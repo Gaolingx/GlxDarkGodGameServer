@@ -54,6 +54,7 @@ public class CacheSvc
         onLineSessionDic.Add(session, playerData);
     }
 
+    //判断当前名字是否存在：遍历当前数据表内的所有数据（查询数据表），如果不存在，则该名字合法
     public bool IsNameExist(string name)
     {
         return dbMgr.QueryNameData(name);

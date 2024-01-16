@@ -31,6 +31,7 @@ public class PECommon
         return ((lv - 1) / 10) * 150 + 150;
     }
 
+    //计算当前级别升至下一级需要的经验值
     public static int GetExpUpValByLv(int lv)
     {
         return 100 * lv * lv;

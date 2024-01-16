@@ -47,7 +47,7 @@ public class NetSvc {
 
     public void Update() {
         if (msgPackQue.Count > 0) {
-            //PECommon.Log("QueCount:" + msgPackQue.Count);
+            PECommon.Log("QueCount:" + msgPackQue.Count);
             lock (obj) {
                 MsgPack pack = msgPackQue.Dequeue();
                 HandOutMsg(pack);

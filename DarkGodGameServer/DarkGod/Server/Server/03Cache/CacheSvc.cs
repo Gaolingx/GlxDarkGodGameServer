@@ -96,7 +96,7 @@ public class CacheSvc {
             }
         }
 
-        bool succ = onLineSessionDic.Remove(session);
-        PECommon.Log("Offline Result: SessionID:" + session.sessionID + "  " + succ);
+        bool isRemovedOnLineSessionDic = onLineSessionDic.Remove(session);
+        PECommon.Log("Offline Result: SessionID:" + session.sessionID + "  " + isRemovedOnLineSessionDic);
     }
 }

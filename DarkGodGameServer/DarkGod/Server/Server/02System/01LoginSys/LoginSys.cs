@@ -109,4 +109,9 @@ public class LoginSys
         }
         pack.session.SendMsg(msg);
     }
+
+    public void ClearOfflineData(ServerSession session)
+    {
+        cacheSvc.AcctOffLine(session);
+    }
 }

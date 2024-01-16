@@ -77,4 +77,20 @@ public class CacheSvc
     {
         return dbMgr.UpdatePlayerData(id, playerData);
     }
+
+    //玩家下线时清除缓存中的数据
+    public void AcctOffLine(ServerSession session)
+    {
+        foreach(var item in onLineAcctDic)
+        {
+            if(item.Value == session)
+            {
+                onLineAcctDic.Remove(item.Key);
+                break;
+            }
+        }
+
+        bool isRemovedOnLineSessionDic = onLineSessionDic.Remove(session);
+        PECommon.Log("Offline Result: SessionID:" + session.sessionID + "  " + isRemovedOnLineSessionDic);
+    }
 }

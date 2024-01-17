@@ -2,8 +2,6 @@
 using System;
 using PENet;
 
-using System;
-using PENet;
 
 namespace PEProtocol
 {

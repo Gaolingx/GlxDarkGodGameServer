@@ -13,6 +13,9 @@ namespace PEProtocol
 
         public ReqRename reqRename;
         public RspRename rspRename;
+
+        public ReqGuide reqGuide;
+        public RspGuide rspGuide;
     }
 
     #region 登录相关
@@ -65,6 +68,23 @@ namespace PEProtocol
     }
     #endregion
 
+    #region 引导相关
+    [Serializable]
+    public class ReqGuide
+    {
+        public int guideid; //客户端发送已经完成引导任务的id
+    }
+
+    [Serializable]
+    public class RspGuide
+    {
+        public int guideid; //服务器更新引导id返回给客户端
+        public int coin;
+        public int lv;
+        public int exp;
+    }
+
+    #endregion
 
 
     public enum ErrorCode
@@ -87,6 +107,11 @@ namespace PEProtocol
 
         ReqRename = 103,
         RspRename = 104,
+
+        //主城相关 200
+        ReqGuide = 200,
+        RspGuide = 201,
+
     }
 
     public class SrvCfg

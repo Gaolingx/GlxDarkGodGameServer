@@ -90,7 +90,7 @@ namespace PEProtocol
     public enum ErrorCode
     {
         None = 0,//没有错误
-
+        ServerDataError,//服务器数据异常
         UpdateDBError,//更新数据库错误
 
         AcctIsOnline,//账号已经上线

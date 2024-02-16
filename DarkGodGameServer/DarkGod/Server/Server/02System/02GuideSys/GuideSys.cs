@@ -23,6 +23,7 @@ public class GuideSys
     public void Init()
     {
         cacheSvc = CacheSvc.Instance;
+        cfgSvc = CfgSvc.Instance;
         PECommon.Log("GuideSys Init Done.");
     }
 

@@ -71,8 +71,33 @@ public class DBMgr
                         critical = reader.GetInt32("critical"),
 
                         guideid = reader.GetInt32("guideid")
+
                         //TOADD
                     };
+                    #region Strong
+                    //数据示意：1#2#2#4#3#...7#
+                    string[] strongStrArr = reader.GetString("strong").Split('#');
+
+                    int[] _strongArr = new int[6];
+                    for (int i = 0; i < strongStrArr.Length; i++)
+                    {
+                        if (strongStrArr[i] == "")
+                        {
+                            continue;
+                        }
+                        if (int.TryParse(strongStrArr[i], out int starLv))
+                        {
+                            _strongArr[i] = starLv;
+                        }
+                        else
+                        {
+                            PECommon.Log("Parse Strong Data Error", PELogType.Error);
+                        }
+                    }
+                    playerData.strongArr = _strongArr;
+                    #endregion
+
+                    //TODO
                 }
             }
         }
@@ -110,7 +135,8 @@ public class DBMgr
                     pierce = 5,
                     critical = 2,
 
-                    guideid = 1001
+                    guideid = 1001,
+                    strongArr = new int[6],
                     //TOADD
                 };
 
@@ -129,8 +155,8 @@ public class DBMgr
         {
             MySqlCommand cmd = new MySqlCommand(
                 "insert into account set acct=@acct,pass =@pass,name=@name,level=@level,exp=@exp,power=@power,coin=@coin,diamond=@diamond," +
-                "hp = @hp, ad = @ad, ap = @ap, addef = @addef, apdef = @apdef, dodge = @dodge, pierce = @pierce, critical = @critical," +
-                "guideid=@guideid", DBconn);
+                "crystal=@crystal,hp = @hp, ad = @ad, ap = @ap, addef = @addef, apdef = @apdef, dodge = @dodge, pierce = @pierce, critical = @critical," +
+                "guideid=@guideid,strong=@strong", DBconn);
             cmd.Parameters.AddWithValue("acct", acct);
             cmd.Parameters.AddWithValue("pass", pass);
             cmd.Parameters.AddWithValue("name", pd.name);
@@ -150,6 +176,16 @@ public class DBMgr
             cmd.Parameters.AddWithValue("critical", pd.critical);
 
             cmd.Parameters.AddWithValue("guideid", pd.guideid);
+
+            string strongInfo = "";
+            //将数组转换为字符串
+            for (int i = 0; i < pd.strongArr.Length; i++)
+            {
+                strongInfo += pd.strongArr[i];
+                strongInfo += "#";
+            }
+            cmd.Parameters.AddWithValue("strong", strongInfo);
+
             //TOADD
             cmd.ExecuteNonQuery();
             id = (int)cmd.LastInsertedId;
@@ -197,9 +233,9 @@ public class DBMgr
         {
             //更新玩家数据
             MySqlCommand cmd = new MySqlCommand(
-            "update account set name=@name,level=@level,exp=@exp,power=@power,coin=@coin,diamond=@diamond," +
+            "update account set name=@name,level=@level,exp=@exp,power=@power,coin=@coin,diamond=@diamond,crystal=@crystal," +
             "hp = @hp, ad = @ad, ap = @ap, addef = @addef, apdef = @apdef, dodge = @dodge, pierce = @pierce, critical = @critical," +
-            "guideid=@guideid where id =@id", DBconn);
+            "guideid=@guideid,strong=@strong where id =@id", DBconn);
             cmd.Parameters.AddWithValue("id", id);
             cmd.Parameters.AddWithValue("name", playerData.name);
             cmd.Parameters.AddWithValue("level", playerData.lv);
@@ -219,6 +255,13 @@ public class DBMgr
 
             cmd.Parameters.AddWithValue("guideid", playerData.guideid);
 
+            string strongInfo = "";
+            for (int i = 0; i < playerData.strongArr.Length; i++)
+            {
+                strongInfo += playerData.strongArr[i];
+                strongInfo += "#";
+            }
+            cmd.Parameters.AddWithValue("strong", strongInfo);
             //TOADD Others
             cmd.ExecuteNonQuery();
         }

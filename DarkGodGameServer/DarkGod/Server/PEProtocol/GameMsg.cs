@@ -42,6 +42,7 @@ namespace PEProtocol
         public int power;
         public int coin;
         public int diamond;
+        public int crystal;
 
         public int hp;
         public int ad;

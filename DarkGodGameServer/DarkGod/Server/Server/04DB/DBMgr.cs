@@ -60,6 +60,7 @@ public class DBMgr
                         power = reader.GetInt32("power"),
                         coin = reader.GetInt32("coin"),
                         diamond = reader.GetInt32("diamond"),
+                        crystal = reader.GetInt32("crystal"),
 
                         hp = reader.GetInt32("hp"),
                         ad = reader.GetInt32("ad"),
@@ -125,6 +126,7 @@ public class DBMgr
                     power = 150,
                     coin = 5000,
                     diamond = 500,
+                    crystal = 500,
 
                     hp = 2000,
                     ad = 275,
@@ -165,6 +167,7 @@ public class DBMgr
             cmd.Parameters.AddWithValue("power", pd.power);
             cmd.Parameters.AddWithValue("coin", pd.coin);
             cmd.Parameters.AddWithValue("diamond", pd.diamond);
+            cmd.Parameters.AddWithValue("crystal", pd.crystal);
 
             cmd.Parameters.AddWithValue("hp", pd.hp);
             cmd.Parameters.AddWithValue("ad", pd.ad);
@@ -243,6 +246,7 @@ public class DBMgr
             cmd.Parameters.AddWithValue("power", playerData.power);
             cmd.Parameters.AddWithValue("coin", playerData.coin);
             cmd.Parameters.AddWithValue("diamond", playerData.diamond);
+            cmd.Parameters.AddWithValue("crystal", playerData.crystal);
 
             cmd.Parameters.AddWithValue("hp", playerData.hp);
             cmd.Parameters.AddWithValue("ad", playerData.ad);

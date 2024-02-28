@@ -16,6 +16,9 @@ namespace PEProtocol
 
         public ReqGuide reqGuide;
         public RspGuide rspGuide;
+
+        public ReqStrong reqStrong;
+        public RspStrong rspStrong;
     }
 
     #region 登录相关
@@ -85,7 +88,27 @@ namespace PEProtocol
         public int lv;
         public int exp;
     }
+    #endregion
 
+    #region 强化相关
+    //只传输核心数据
+    [Serializable]
+    public class ReqStrong
+    {
+        public int pos; //强化部位
+    }
+    [Serializable]
+    public class RspStrong
+    {
+        public int coin;
+        public int crystal;
+        public int hp;
+        public int ad;
+        public int ap;
+        public int addef;
+        public int apdef;
+        public int[] strongArr; //强化数据更新
+    }
     #endregion
 
 
@@ -98,6 +121,10 @@ namespace PEProtocol
         AcctIsOnline,//账号已经上线
         WrongPass,//密码错误
         NameIsExist,//名字已经存在
+
+        LackLevel,//等级不够
+        LackCoin,//金币不够
+        LackCrystal//水晶不够
     }
 
     public enum CMD
@@ -111,8 +138,12 @@ namespace PEProtocol
         RspRename = 104,
 
         //主城相关 200
-        ReqGuide = 200,
-        RspGuide = 201,
+        ReqGuide = 201,
+        RspGuide = 202,
+
+        //强化相关
+        ReqStrong = 203,
+        RspStrong = 204,
 
     }
 

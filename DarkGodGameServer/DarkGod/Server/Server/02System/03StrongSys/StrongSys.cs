@@ -1,6 +1,7 @@
 ﻿//功能：强化升级系统
 
 using PEProtocol;
+using static CfgSvc;
 
 public class StrongSys
 {
@@ -35,12 +36,58 @@ public class StrongSys
 
         PlayerData pd = cacheSvc.GetPlayerDataBySession(pack.session);
         int curtStarLv = pd.strongArr[data.pos];
+        StrongCfg nextSd = CfgSvc.Instance.GetStrongCfg(data.pos, curtStarLv + 1);
+
         //条件判断
+        if (pd.lv < nextSd.minlv)
+        {
+            msg.err = (int)ErrorCode.LackLevel;
+        }
+        else if (pd.coin < nextSd.coin)
+        {
+            msg.err = (int)ErrorCode.LackCoin;
+        }
+        else if (pd.crystal < nextSd.crystal)
+        {
+            msg.err = (int)ErrorCode.LackCrystal;
+        }
+        else
+        {
+            //满足条件扣除相应资源
+            pd.coin -= nextSd.coin;
+            pd.crystal -= nextSd.crystal;
 
-        //满足条件扣除相应资源
+            //相应部位增加星级
+            pd.strongArr[data.pos] += 1;
 
-        //增加星级所产生的属性增益
+            //增加星级所产生的属性增益
+            pd.hp += nextSd.addhp;
+            pd.ad += nextSd.addhurt;
+            pd.ap += nextSd.addhurt;
+            pd.addef += nextSd.adddef;
+            pd.apdef += nextSd.adddef;
+        }
 
+        //更新数据库
+        if (!cacheSvc.UpdatePlayerData(pd.id, pd))
+        {
+            msg.err = (int)ErrorCode.UpdateDBError;
+        }
+        else
+        {
+            msg.rspStrong = new RspStrong
+            {
+                coin = pd.coin,
+                crystal = pd.crystal,
+                hp = pd.hp,
+                ad = pd.ad,
+                ap = pd.ap,
+                addef = pd.addef,
+                apdef = pd.apdef,
+                strongArr = pd.strongArr
+            };
+        }
         //将消息发回客户端
+        pack.session.SendMsg(msg);
     }
 }

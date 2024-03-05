@@ -3,6 +3,8 @@ using System;
 using PENet;
 
 
+//Reqxxx：客户端请求服务器
+//Rspxxx：服务器回应客户端
 namespace PEProtocol
 {
     [Serializable]
@@ -19,6 +21,9 @@ namespace PEProtocol
 
         public ReqStrong reqStrong;
         public RspStrong rspStrong;
+
+        public SndChat sndChat;
+        public PshChat pshChat;
     }
 
     #region 登录相关
@@ -111,6 +116,20 @@ namespace PEProtocol
     }
     #endregion
 
+    #region 聊天相关
+    [Serializable]
+    public class SndChat
+    {
+        public string chat;
+    }
+
+    [Serializable]
+    public class PshChat
+    {
+        public string name;
+        public string chat;
+    }
+    #endregion
 
     public enum ErrorCode
     {
@@ -144,6 +163,10 @@ namespace PEProtocol
         //强化相关
         ReqStrong = 203,
         RspStrong = 204,
+
+        //聊天相关
+        SndChat = 205,
+        PshChat = 206,
 
     }
 

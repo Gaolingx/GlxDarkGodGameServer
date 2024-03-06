@@ -60,6 +60,19 @@ public class CacheSvc
         return dbMgr.QueryNameData(name);
     }
 
+    //获取所有在线客户端session
+    public List<ServerSession> GetOnlineServerSessions()
+    {
+        List<ServerSession> lst = new List<ServerSession>();
+        //遍历缓存字典，获取每个key，添加到list中
+        foreach(var item in onLineSessionDic)
+        {
+            lst.Add(item.Key);
+        }
+        return lst;
+    }
+
+
     //从字典缓存中获取playerdata
     public PlayerData GetPlayerDataBySession(ServerSession session)
     {

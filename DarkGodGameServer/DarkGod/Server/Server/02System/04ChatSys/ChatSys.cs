@@ -44,9 +44,12 @@ public class ChatSys
         //将消息广播给所有在线客户端
         //获取所有玩家的session，再逐一发消息
         List<ServerSession> lst = cacheSvc.GetOnlineServerSessions();
+        byte[] bytes = PENet.PETool.PackNetMsg(msg);
         for(int i = 0; i < lst.Count; i++)
         {
-            lst[i].SendMsg(msg);
+            lst[i].SendMsg(bytes);
+            //注意：你不应该直接使用 lst[i].SendMsg(msg); 重复的序列化会影响性能，但由于玩家收到的消息是一样的，
+            //我们应该先把需要重复序列化的网络消息（类）先序列化成二进制数据，再发送给客户端，节约序列化的CPU时间
         }
 
     }

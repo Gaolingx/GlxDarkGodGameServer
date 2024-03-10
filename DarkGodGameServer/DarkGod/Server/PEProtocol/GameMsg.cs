@@ -24,6 +24,9 @@ namespace PEProtocol
 
         public SndChat sndChat;
         public PshChat pshChat;
+
+        public ReqBuy reqBuy;
+        public RspBuy rspBuy;
     }
 
     #region 登录相关
@@ -131,6 +134,24 @@ namespace PEProtocol
     }
     #endregion
 
+    #region 资源交易相关
+    [Serializable]
+    public class ReqBuy
+    {
+        public int type;
+        public int cost;
+    }
+
+    [Serializable]
+    public class RspBuy
+    {
+        public int type;
+        public int dimond;
+        public int coin;
+        public int power;
+    }
+    #endregion
+
     public enum ErrorCode
     {
         None = 0,//没有错误
@@ -156,7 +177,7 @@ namespace PEProtocol
         ReqRename = 103,
         RspRename = 104,
 
-        //主城相关 200
+        //引导任务相关 200
         ReqGuide = 201,
         RspGuide = 202,
 
@@ -167,6 +188,10 @@ namespace PEProtocol
         //聊天相关
         SndChat = 205,
         PshChat = 206,
+
+        //资源交易相关
+        ReqBuy = 207,
+        RspBuy = 208,
 
     }
 

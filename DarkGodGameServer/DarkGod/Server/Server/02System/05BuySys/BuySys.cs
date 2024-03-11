@@ -2,6 +2,7 @@
 
 
 using PEProtocol;
+using static CfgSvc;
 
 public class BuySys
 {
@@ -18,10 +19,12 @@ public class BuySys
         }
     }
     private CacheSvc cacheSvc = null;
+    private CfgSvc cfgSvc = null;
 
     public void Init()
     {
         cacheSvc = CacheSvc.Instance;
+        cfgSvc = CfgSvc.Instance;
         PECommon.Log("BuySys Init Done.");
     }
 
@@ -35,9 +38,10 @@ public class BuySys
 
         //获取玩家数据
         PlayerData pd = cacheSvc.GetPlayerDataBySession(pack.session);
+        BuyCfg bc = cfgSvc.GetBuyCfg(data.type);
 
         //校验客户端数据
-        if(pd.diamond <data.cost)
+        if (pd.diamond < data.cost)
         {
             msg.err = (int)ErrorCode.LackDiamond;
 
@@ -49,12 +53,11 @@ public class BuySys
             //根据购买类型增加相应资源
             switch(data.type)
             {
-                //体力
                 case 0:
-                    pd.power += 100;
+                    pd.power += bc.amountEachPurchase;
                     break;
                 case 1:
-                    pd.coin += 1000;
+                    pd.coin += bc.amountEachPurchase;
                     break;
 
             }

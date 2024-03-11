@@ -22,6 +22,7 @@ public class CfgSvc
     {
         InitGuideCfg();
         InitStrongCfg();
+        InitBuyCfg();
         PECommon.Log("CfgSvc Init Done.");
     }
 
@@ -161,6 +162,57 @@ public class CfgSvc
     }
     #endregion
 
+    #region 资源交易配置
+    private Dictionary<int, BuyCfg> buyCfgDic = new Dictionary<int, BuyCfg>();
+    private void InitBuyCfg()
+    {
+        XmlDocument doc = new XmlDocument();
+        doc.Load(@"F:\GitHub\GlxDarkGodGameServer\DarkGodGameServer\DarkGod\Server\ServerCfg\buyCfg.xml");     //根据配置文件本地路径修改
+
+        XmlNodeList nodLst = doc.SelectSingleNode("root").ChildNodes;
+
+        for (int i = 0; i < nodLst.Count; i++)
+        {
+            XmlElement ele = nodLst[i] as XmlElement;
+
+            if (ele.GetAttributeNode("ID") == null)
+            {
+                continue;
+            }
+            int ID = Convert.ToInt32(ele.GetAttributeNode("ID").InnerText);
+            BuyCfg buyCfg = new BuyCfg
+            {
+                ID = ID
+            };
+
+            foreach (XmlElement e in nodLst[i].ChildNodes)
+            {
+                switch (e.Name)
+                {
+                    case "buyCostDiamondOnce":
+                        buyCfg.buyCostDiamondOnce = int.Parse(e.InnerText);
+                        break;
+                    case "amountEachPurchase":
+                        buyCfg.amountEachPurchase = int.Parse(e.InnerText);
+                        break;
+                }
+            }
+            buyCfgDic.Add(ID, buyCfg);
+        }
+        PECommon.Log("BuyCfg Init Done.");
+
+    }
+    public BuyCfg GetBuyCfg(int id)
+    {
+        BuyCfg bc = null;
+        if (buyCfgDic.TryGetValue(id, out bc))
+        {
+            return bc;
+        }
+        return null;
+    }
+    #endregion
+
     public class GuideCfg : BaseData<GuideCfg>
     {
         public int coin;
@@ -177,6 +229,12 @@ public class CfgSvc
         public int minlv;
         public int coin;
         public int crystal;
+    }
+
+    public class BuyCfg : BaseData<BuyCfg>
+    {
+        public int buyCostDiamondOnce;
+        public int amountEachPurchase;
     }
 
     public class BaseData<T>

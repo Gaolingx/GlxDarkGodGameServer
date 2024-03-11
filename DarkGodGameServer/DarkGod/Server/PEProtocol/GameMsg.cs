@@ -164,7 +164,8 @@ namespace PEProtocol
 
         LackLevel,//等级不够
         LackCoin,//金币不够
-        LackCrystal//水晶不够
+        LackCrystal,//水晶不够
+        LackDiamond,//钻石不够
     }
 
     public enum CMD

@@ -51,7 +51,7 @@ public class BuySys
             //扣除消耗的资源
             pd.diamond -= data.cost;
             //根据购买类型增加相应资源
-            switch(data.type)
+            switch (data.type)
             {
                 case 0:
                     pd.power += bc.amountEachPurchase;
@@ -73,7 +73,7 @@ public class BuySys
             RspBuy rspBuy = new RspBuy
             {
                 type = data.type,
-                dimond = pd.diamond,
+                diamond = pd.diamond,
                 coin = pd.coin,
                 power = pd.power
             };

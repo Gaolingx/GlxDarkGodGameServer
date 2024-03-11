@@ -146,7 +146,7 @@ namespace PEProtocol
     public class RspBuy
     {
         public int type;
-        public int dimond;
+        public int diamond;
         public int coin;
         public int power;
     }

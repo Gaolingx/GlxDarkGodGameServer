@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PEProtocol\PEProtocol.csproj" />
+    <ProjectReference Include="..\PETimer\PETimer.csproj" />
   </ItemGroup>
 
   <ItemGroup>

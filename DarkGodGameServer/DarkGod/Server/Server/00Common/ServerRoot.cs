@@ -25,6 +25,7 @@ public class ServerRoot
         CfgSvc.Instance.Init();
         CacheSvc.Instance.Init();
         NetSvc.Instance.Init();
+        TimerSvc.Instance.Init();
 
         //业务系统层
         LoginSys.Instance.Init();
@@ -38,6 +39,7 @@ public class ServerRoot
     public void Update()
     {
         NetSvc.Instance.Update();
+        TimerSvc.Instance.Update();
     }
 
     private int SessionID = 0;

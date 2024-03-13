@@ -5,7 +5,9 @@ VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server", "Server\Server.csproj", "{B36BB8D6-16DE-4232-AC9E-DB5AD9C9F622}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PEProtocol", "PEProtocol\PEProtocol.csproj", "{A6ED5485-2E01-4A66-BC2C-2F7F972D649C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PEProtocol", "PEProtocol\PEProtocol.csproj", "{A6ED5485-2E01-4A66-BC2C-2F7F972D649C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PETimer", "PETimer\PETimer.csproj", "{EF27C6D9-9CF9-48FC-9F4F-E219483FED47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{A6ED5485-2E01-4A66-BC2C-2F7F972D649C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6ED5485-2E01-4A66-BC2C-2F7F972D649C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6ED5485-2E01-4A66-BC2C-2F7F972D649C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF27C6D9-9CF9-48FC-9F4F-E219483FED47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF27C6D9-9CF9-48FC-9F4F-E219483FED47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF27C6D9-9CF9-48FC-9F4F-E219483FED47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF27C6D9-9CF9-48FC-9F4F-E219483FED47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

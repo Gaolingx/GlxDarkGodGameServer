@@ -33,6 +33,7 @@ public class ServerRoot
         StrongSys.Instance.Init();
         ChatSys.Instance.Init();
         BuySys.Instance.Init();
+        PowerSys.Instance.Init();
 
     }
 

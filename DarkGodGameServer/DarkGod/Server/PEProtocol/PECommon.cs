@@ -36,4 +36,9 @@ public class PECommon
     {
         return 100 * lv * lv;
     }
+
+    //体力恢复间隙
+    public const int PowerAddSpace = 5; //单位：分钟
+    //每次回复的体力计数
+    public const int PowerAddCount = 2;
 }

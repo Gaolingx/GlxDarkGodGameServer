@@ -60,7 +60,7 @@ public class PowerSys
                 }
             }
 
-            if(cacheSvc.UpdatePlayerData(pd.id, pd))
+            if(!cacheSvc.UpdatePlayerData(pd.id, pd))
             {
                 msg.err = (int)ErrorCode.UpdateDBError;
             }

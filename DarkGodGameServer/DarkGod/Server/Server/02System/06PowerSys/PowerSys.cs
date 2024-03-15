@@ -17,10 +17,12 @@ public class PowerSys
         }
     }
     private CacheSvc cacheSvc = null;
+    private TimerSvc timerSvc = null;
 
     public void Init()
     {
         cacheSvc = CacheSvc.Instance;
+        timerSvc = TimerSvc.Instance;
 
         //每过5分钟执行一次CalcPowerAdd函数
         TimerSvc.Instance.AddTimeTask(CalcPowerAdd, PECommon.PowerAddSpace, PETimeUnit.Minute, 0);
@@ -30,7 +32,7 @@ public class PowerSys
     private void CalcPowerAdd(int tid)
     {
         //计算体力增长
-        PECommon.Log("All Online Player Calc Incress...");
+        PECommon.Log("All Online Player Calc Power Incress....");
         GameMsg msg = new GameMsg
         {
             cmd = (int)CMD.PshPower
@@ -54,13 +56,13 @@ public class PowerSys
             {
                 pd.power += PECommon.PowerAddCount;
                 //加个判断，防止超出限制
-                if(pd.power > powerMax)
+                if (pd.power > powerMax)
                 {
                     pd.power = powerMax;
                 }
             }
 
-            if(!cacheSvc.UpdatePlayerData(pd.id, pd))
+            if (!cacheSvc.UpdatePlayerData(pd.id, pd))
             {
                 msg.err = (int)ErrorCode.UpdateDBError;
             }
@@ -69,8 +71,7 @@ public class PowerSys
                 msg.pshPower.power = pd.power;
                 session.SendMsg(msg);
             }
-            
-        }
 
+        }
     }
 }

@@ -36,14 +36,12 @@ public class TimerSvc
         pt = new PETimer(100); //每隔100ms进行一次定时任务检测
         tpQue.Clear(); //清空Quene
 
-        //设置定时器日志输出
-        pt.SetLog((string info) =>
-        {
+        //设置日志输出
+        pt.SetLog((string info) => {
             PECommon.Log(info);
         });
 
-        pt.SetHandle((Action<int> cb, int tid) =>
-        {
+        pt.SetHandle((Action<int> cb, int tid) => {
             if (cb != null)
             {
                 lock (tpQueLock)
@@ -67,7 +65,7 @@ public class TimerSvc
                 tp = tpQue.Dequeue();
             }
 
-            if (tp == null)
+            if (tp != null)
             {
                 tp.cb(tp.tid);
             }

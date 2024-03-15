@@ -27,6 +27,8 @@ namespace PEProtocol
 
         public ReqBuy reqBuy;
         public RspBuy rspBuy;
+
+        public PshPower pshPower;
     }
 
     #region 登录相关
@@ -152,6 +154,14 @@ namespace PEProtocol
     }
     #endregion
 
+    #region 体力回复相关
+    [Serializable]
+    public class PshPower
+    {
+        public int power;
+    }
+    #endregion
+
     public enum ErrorCode
     {
         None = 0,//没有错误
@@ -193,6 +203,9 @@ namespace PEProtocol
         //资源交易相关
         ReqBuy = 207,
         RspBuy = 208,
+
+        //体力计算相关
+        PshPower = 209,
 
     }
 

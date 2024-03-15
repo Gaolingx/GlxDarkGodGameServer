@@ -86,6 +86,12 @@ public class CacheSvc
         }
     }
 
+    //获取所有在线玩家的数据缓存
+    public Dictionary<ServerSession, PlayerData> GetOnlineCache()
+    {
+        return onLineSessionDic;
+    }
+
     public bool UpdatePlayerData(int id, PlayerData playerData)
     {
         return dbMgr.UpdatePlayerData(id, playerData);

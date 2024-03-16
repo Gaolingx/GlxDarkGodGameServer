@@ -18,10 +18,12 @@ public class LoginSys
         }
     }
     private CacheSvc cacheSvc = null;
+    private TimerSvc timerSvc = null;
 
     public void Init()
     {
         cacheSvc = CacheSvc.Instance;
+        timerSvc = TimerSvc.Instance;
         PECommon.Log("LoginSys Init Done.");
     }
 
@@ -55,6 +57,33 @@ public class LoginSys
             }
             else
             {
+                //计算离线体力增长
+                int power = pd.power; //当前体力值
+                //获取当前时间
+                long nowTime = timerSvc.GetNowTime();
+                //计算登录时间间隔
+                long milliseconds = nowTime - pd.time;
+                //计算需要增加的体力值
+                int addPower = (int)(milliseconds / (1000 * 60 * PECommon.PowerAddSpace)) * PECommon.PowerAddCount;
+                if (addPower > 0)
+                {
+                    int powerMax = PECommon.GetPowerLimit(pd.lv);
+                    if (pd.power < powerMax)
+                    {
+                        pd.power += addPower;
+                        if (pd.power > powerMax)
+                        {
+                            pd.power = powerMax; //不超过体力上限
+                        }
+                    }
+                }
+
+                //判断是否需要更新数据库
+                if (power != pd.power)
+                {
+                    cacheSvc.UpdatePlayerData(pd.id, pd);
+                }
+
                 //不存在，创建默认的账号密码（账号不存在），或者将当前获取到的有效的账号数据返回给客户端（账号存在）
                 msg.rspLogin = new RspLogin
                 {

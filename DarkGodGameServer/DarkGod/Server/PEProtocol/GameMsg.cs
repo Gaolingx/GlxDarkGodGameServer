@@ -68,6 +68,8 @@ namespace PEProtocol
 
         public int guideid;//引导id
         public int[] strongArr;//数组的索引号代表强化的部位，索引号对应的数据代表星级
+
+        public long time;
         //TOADD
     }
 

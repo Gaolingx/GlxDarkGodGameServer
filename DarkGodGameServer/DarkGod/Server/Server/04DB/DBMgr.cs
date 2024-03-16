@@ -71,7 +71,8 @@ public class DBMgr
                         pierce = reader.GetInt32("pierce"),
                         critical = reader.GetInt32("critical"),
 
-                        guideid = reader.GetInt32("guideid")
+                        guideid = reader.GetInt32("guideid"),
+                        time = reader.GetInt64("time"),
 
                         //TOADD
                     };
@@ -139,6 +140,7 @@ public class DBMgr
 
                     guideid = 1001,
                     strongArr = new int[6],
+                    time = TimerSvc.Instance.GetNowTime(),
                     //TOADD
                 };
 
@@ -158,7 +160,7 @@ public class DBMgr
             MySqlCommand cmd = new MySqlCommand(
                 "insert into account set acct=@acct,pass =@pass,name=@name,level=@level,exp=@exp,power=@power,coin=@coin,diamond=@diamond," +
                 "crystal=@crystal,hp = @hp, ad = @ad, ap = @ap, addef = @addef, apdef = @apdef, dodge = @dodge, pierce = @pierce, critical = @critical," +
-                "guideid=@guideid,strong=@strong", DBconn);
+                "guideid=@guideid,strong=@strong,time=@time", DBconn);
             cmd.Parameters.AddWithValue("acct", acct);
             cmd.Parameters.AddWithValue("pass", pass);
             cmd.Parameters.AddWithValue("name", pd.name);
@@ -188,6 +190,7 @@ public class DBMgr
                 strongInfo += "#";
             }
             cmd.Parameters.AddWithValue("strong", strongInfo);
+            cmd.Parameters.AddWithValue("time", pd.time);
 
             //TOADD
             cmd.ExecuteNonQuery();
@@ -238,7 +241,7 @@ public class DBMgr
             MySqlCommand cmd = new MySqlCommand(
             "update account set name=@name,level=@level,exp=@exp,power=@power,coin=@coin,diamond=@diamond,crystal=@crystal," +
             "hp = @hp, ad = @ad, ap = @ap, addef = @addef, apdef = @apdef, dodge = @dodge, pierce = @pierce, critical = @critical," +
-            "guideid=@guideid,strong=@strong where id =@id", DBconn);
+            "guideid=@guideid,strong=@strong,time=@time where id =@id", DBconn);
             cmd.Parameters.AddWithValue("id", id);
             cmd.Parameters.AddWithValue("name", playerData.name);
             cmd.Parameters.AddWithValue("level", playerData.lv);
@@ -266,6 +269,8 @@ public class DBMgr
                 strongInfo += "#";
             }
             cmd.Parameters.AddWithValue("strong", strongInfo);
+            cmd.Parameters.AddWithValue("time", playerData.time);
+
             //TOADD Others
             cmd.ExecuteNonQuery();
         }

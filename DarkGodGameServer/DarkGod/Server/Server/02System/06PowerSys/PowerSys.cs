@@ -55,6 +55,8 @@ public class PowerSys
             else
             {
                 pd.power += PECommon.PowerAddCount;
+                //安全代码：在更新在线玩家体力时候，顺便刷新玩家在线时间，而不必等到下线才刷新，避免服务器异常/崩溃等意外情况导致没有及时写入。
+                pd.time = timerSvc.GetNowTime();
                 //加个判断，防止超出限制
                 if (pd.power > powerMax)
                 {

@@ -57,6 +57,8 @@ public class LoginSys
             }
             else
             {
+                //对于离线玩家的体力计算：记录玩家最后一次在线时间，当玩家再次上线时，根据当前上线时间 - 原来上次在线的时间，算出时间差，根据这个时间差，除以体力回复的间隔，算出应该增长的体力，并不超过上限。
+
                 //计算离线体力增长
                 int power = pd.power; //当前体力值
                 //获取当前时间
@@ -141,6 +143,16 @@ public class LoginSys
 
     public void ClearOfflineData(ServerSession session)
     {
-        cacheSvc.AcctOffLine(session);
+        //写入下线时间，用于离线体力的计算
+        PlayerData pd = cacheSvc.GetPlayerDataBySession(session);
+        if (pd != null)
+        {
+            pd.time = timerSvc.GetNowTime();
+            if (!cacheSvc.UpdatePlayerData(pd.id, pd))
+            {
+                PECommon.Log("Update offline time error", PELogType.Error);
+            }
+            cacheSvc.AcctOffLine(session);
+        }
     }
 }

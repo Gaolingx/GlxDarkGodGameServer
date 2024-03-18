@@ -34,6 +34,7 @@ public class ServerRoot
         ChatSys.Instance.Init();
         BuySys.Instance.Init();
         PowerSys.Instance.Init();
+        TaskSys.Instance.Init();
 
     }
 

@@ -193,7 +193,7 @@ public class DBMgr
             MySqlCommand cmd = new MySqlCommand(
                 "insert into account set acct=@acct,pass =@pass,name=@name,level=@level,exp=@exp,power=@power,coin=@coin,diamond=@diamond," +
                 "crystal=@crystal,hp = @hp, ad = @ad, ap = @ap, addef = @addef, apdef = @apdef, dodge = @dodge, pierce = @pierce, critical = @critical," +
-                "guideid=@guideid,strong=@strong,time=@time", DBconn);
+                "guideid=@guideid,strong=@strong,time=@time,task=@task", DBconn);
             cmd.Parameters.AddWithValue("acct", acct);
             cmd.Parameters.AddWithValue("pass", pass);
             cmd.Parameters.AddWithValue("name", pd.name);
@@ -224,6 +224,15 @@ public class DBMgr
             }
             cmd.Parameters.AddWithValue("strong", strongInfo);
             cmd.Parameters.AddWithValue("time", pd.time);
+
+            //1|0|0#1|0|0#1|0|0#1|0|0#1|0|0#
+            string taskInfo = "";
+            for(int i = 0;i < pd.taskArr.Length;i++)
+            {
+                taskInfo += pd.taskArr[i];
+                taskInfo += "#";
+            }
+            cmd.Parameters.AddWithValue("task", taskInfo);
 
             //TOADD
             cmd.ExecuteNonQuery();
@@ -274,7 +283,7 @@ public class DBMgr
             MySqlCommand cmd = new MySqlCommand(
             "update account set name=@name,level=@level,exp=@exp,power=@power,coin=@coin,diamond=@diamond,crystal=@crystal," +
             "hp = @hp, ad = @ad, ap = @ap, addef = @addef, apdef = @apdef, dodge = @dodge, pierce = @pierce, critical = @critical," +
-            "guideid=@guideid,strong=@strong,time=@time where id =@id", DBconn);
+            "guideid=@guideid,strong=@strong,time=@time,task=@task where id =@id", DBconn);
             cmd.Parameters.AddWithValue("id", id);
             cmd.Parameters.AddWithValue("name", playerData.name);
             cmd.Parameters.AddWithValue("level", playerData.lv);
@@ -303,6 +312,14 @@ public class DBMgr
             }
             cmd.Parameters.AddWithValue("strong", strongInfo);
             cmd.Parameters.AddWithValue("time", playerData.time);
+
+            string taskInfo = "";
+            for (int i = 0; i < playerData.taskArr.Length; i++)
+            {
+                taskInfo += playerData.taskArr[i];
+                taskInfo += "#";
+            }
+            cmd.Parameters.AddWithValue("task", taskInfo);
 
             //TOADD Others
             cmd.ExecuteNonQuery();

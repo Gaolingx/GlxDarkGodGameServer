@@ -23,6 +23,7 @@ public class CfgSvc
         InitGuideCfg();
         InitStrongCfg();
         InitBuyCfg();
+        InitTaskRewrdCfg();
         PECommon.Log("CfgSvc Init Done.");
     }
 
@@ -213,6 +214,60 @@ public class CfgSvc
     }
     #endregion
 
+    #region 任务奖励配置
+    private Dictionary<int, TaskRewardCfg> taskRewardDic = new Dictionary<int, TaskRewardCfg>();
+    private void InitTaskRewrdCfg()
+    {
+        XmlDocument doc = new XmlDocument();
+        doc.Load(@"F:\GitHub\GlxDarkGodGameServer\DarkGodGameServer\DarkGod\Server\ServerCfg\taskreward.xml");
+
+        XmlNodeList nodLst = doc.SelectSingleNode("root").ChildNodes;
+
+        for (int i = 0; i < nodLst.Count; i++)
+        {
+            XmlElement ele = nodLst[i] as XmlElement;
+
+            if (ele.GetAttributeNode("ID") == null)
+            {
+                continue;
+            }
+            int ID = Convert.ToInt32(ele.GetAttributeNode("ID").InnerText);
+            TaskRewardCfg trc = new TaskRewardCfg
+            {
+                ID = ID
+            };
+
+            foreach (XmlElement e in nodLst[i].ChildNodes)
+            {
+                switch (e.Name)
+                {
+                    case "count":
+                        trc.count = int.Parse(e.InnerText);
+                        break;
+                    case "exp":
+                        trc.exp = int.Parse(e.InnerText);
+                        break;
+                    case "coin":
+                        trc.coin = int.Parse(e.InnerText);
+                        break;
+                }
+            }
+            taskRewardDic.Add(ID, trc);
+        }
+        PECommon.Log("TaskRewardCfg Init Done.");
+
+    }
+    public TaskRewardCfg GetTaskRewardCfg(int id)
+    {
+        TaskRewardCfg trc = null;
+        if (taskRewardDic.TryGetValue(id, out trc))
+        {
+            return trc;
+        }
+        return null;
+    }
+    #endregion
+
     public class GuideCfg : BaseData<GuideCfg>
     {
         public int coin;
@@ -235,6 +290,19 @@ public class CfgSvc
     {
         public int buyCostDiamondOnce;
         public int amountEachPurchase;
+    }
+
+    public class TaskRewardCfg : BaseData<TaskRewardCfg>
+    {
+        public int count;
+        public int exp;
+        public int coin;
+    }
+
+    public class TaskRewardData : BaseData<TaskRewardData>
+    {
+        public int prgs;
+        public bool taked;
     }
 
     public class BaseData<T>

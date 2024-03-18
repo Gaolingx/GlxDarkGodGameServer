@@ -76,7 +76,8 @@ public class DBMgr
 
                         //TOADD
                     };
-                    #region Strong
+
+                    #region Strong Arr
                     //数据示意：1#2#2#4#3#...7#
                     string[] strongStrArr = reader.GetString("strong").Split('#');
 
@@ -97,6 +98,29 @@ public class DBMgr
                         }
                     }
                     playerData.strongArr = _strongArr;
+                    #endregion
+
+                    #region Task Arr
+                    //任务数据格式：任务id|任务进度|任务是否被领取，每个任务项以"#"作为分隔符，如1|1|0#2|1|0#3|1|0#4|1|0...以此类推
+                    //数据示意：1|1|0#2|1|0#3|1|0#4|1|0#5|1|0#6|1|0#
+                    string[] taskStrStrArr = reader.GetString("task").Split('#');
+                    playerData.taskArr= new string[6];
+                    for (int i = 0; i < taskStrStrArr.Length; i++)
+                    {
+                        if (taskStrStrArr[i] == "")
+                        {
+                            continue;
+                        }
+                        else if (taskStrStrArr[i].Length >= 5) //校验数据长度，保证安全性
+                        {
+                            playerData.taskArr[i] = taskStrStrArr[i];
+                        }
+                        else
+                        {
+                            //解析出错，抛出异常
+                            throw new Exception("TaskData Error!");
+                        }
+                    }
                     #endregion
 
                     //TODO
@@ -141,8 +165,17 @@ public class DBMgr
                     guideid = 1001,
                     strongArr = new int[6],
                     time = TimerSvc.Instance.GetNowTime(),
+                    taskArr = new string[6],
                     //TOADD
                 };
+
+                //数据示意：1|0|0#2|0|0#3|0|0#4|0|0#5|0|0#6|0|0#
+                //初始化任务奖励数据
+                for (int i = 0; i < playerData.taskArr.Length; i++)
+                {
+                    playerData.taskArr[i] = (i + 1) + "|0|0";
+                }
+
 
                 //获取主键id
                 playerData.id = InsertNewAcctData(acct, pass, playerData);

@@ -53,7 +53,7 @@ public class TaskSys
             //更新任务进度数据
             CalcTaskArr(pd, trd);
 
-            if(!cacheSvc.UpdatePlayerData(pd.id,pd))
+            if (!cacheSvc.UpdatePlayerData(pd.id, pd))
             {
                 msg.err = (int)ErrorCode.UpdateDBError;
             }
@@ -67,7 +67,6 @@ public class TaskSys
                     taskArr = pd.taskArr
                 };
                 msg.rspTakeTaskReward = rspTakeTaskReward;
-
             }
         }
         else

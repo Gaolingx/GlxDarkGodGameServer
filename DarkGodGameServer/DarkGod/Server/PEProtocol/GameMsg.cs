@@ -29,6 +29,9 @@ namespace PEProtocol
         public RspBuy rspBuy;
 
         public PshPower pshPower;
+
+        public ReqTakeTaskReward reqTakeTaskReward;
+        public RspTakeTaskReward rspTakeTaskReward;
     }
 
     #region 登录相关
@@ -166,6 +169,21 @@ namespace PEProtocol
     }
     #endregion
 
+
+    #region 任务奖励相关
+    [Serializable]
+    public class ReqTakeTaskReward
+    {
+        public int rid;
+    }
+    public class RspTakeTaskReward
+    {
+        public int coin;
+        public int lv;
+        public int exp;
+        public string[] taskArr;
+    }
+    #endregion
     public enum ErrorCode
     {
         None = 0,//没有错误
@@ -210,6 +228,10 @@ namespace PEProtocol
 
         //体力计算相关
         PshPower = 209,
+
+        //任务奖励相关
+        ReqTakeTaskReward = 210,
+        RspTakeTaskReward = 211,
 
     }
 

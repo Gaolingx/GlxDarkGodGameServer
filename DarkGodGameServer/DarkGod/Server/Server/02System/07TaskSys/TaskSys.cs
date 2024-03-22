@@ -114,4 +114,20 @@ public class TaskSys
         }
         pd.taskArr[index] = result;
     }
+
+    public void CalcTaskPrgs(PlayerData pd, int tid)
+    {
+        //根据PlayerData和tid获取当前任务进度数据
+        TaskRewardData trd = CalcTaskRewardData(pd, tid);
+        TaskRewardCfg trc = cfgSvc.GetTaskRewardCfg(tid);
+
+        if (trd.prgs < trc.count)
+        {
+            trd.prgs += 1;
+            //更新任务进度
+            CalcTaskArr(pd, trd);
+            //将更新的进度发回Client
+
+        }
+    }
 }

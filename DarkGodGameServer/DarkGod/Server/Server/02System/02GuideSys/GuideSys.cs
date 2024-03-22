@@ -43,6 +43,12 @@ public class GuideSys
         //更新引导ID
         if (pd.guideid == data.guideid)
         {
+
+            //检测是否为智者点拨任务
+            if (pd.guideid == 1001)
+            {
+                TaskSys.Instance.CalcTaskPrgs(pd, 1);
+            }
             pd.guideid += 1;
 
             //更新玩家数据（获取任务相应奖励，并将奖励数据更新到数据库中，最后将更新的结果返回给客户端）

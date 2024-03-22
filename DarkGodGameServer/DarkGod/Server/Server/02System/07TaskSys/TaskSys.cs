@@ -129,12 +129,12 @@ public class TaskSys
 
             //将更新的进度推送到对应Client
             ServerSession session = cacheSvc.GetOnlineServersession(pd.id);
-            if(session != null)
+            if (session != null)
             {
                 session.SendMsg(new GameMsg
                 {
                     cmd = (int)CMD.PshTaskPrgs,
-                    pshTaskPrgs = new PshTaskPrg
+                    pshTaskPrgs = new PshTaskPrgs
                     {
                         taskArr = pd.taskArr
                     }

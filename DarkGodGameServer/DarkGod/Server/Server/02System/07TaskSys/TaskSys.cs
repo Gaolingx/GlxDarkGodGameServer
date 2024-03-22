@@ -126,8 +126,20 @@ public class TaskSys
             trd.prgs += 1;
             //更新任务进度
             CalcTaskArr(pd, trd);
-            //将更新的进度发回Client
 
+            //将更新的进度推送到对应Client
+            ServerSession session = cacheSvc.GetOnlineServersession(pd.id);
+            if(session != null)
+            {
+                session.SendMsg(new GameMsg
+                {
+                    cmd = (int)CMD.PshTaskPrgs,
+                    pshTaskPrgs = new PshTaskPrg
+                    {
+                        taskArr = pd.taskArr
+                    }
+                });
+            }
         }
     }
 }

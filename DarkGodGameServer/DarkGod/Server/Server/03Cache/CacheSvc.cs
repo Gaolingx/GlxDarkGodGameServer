@@ -92,6 +92,21 @@ public class CacheSvc
         return onLineSessionDic;
     }
 
+    //根据id获取连接
+    public ServerSession GetOnlineServersession(int ID)
+    {
+        ServerSession session = null;
+        foreach(var item in onLineSessionDic)
+        {
+            if(item.Value.id == ID)
+            {
+                session = item.Key;
+                break;
+            }
+        }
+        return session;
+    }
+
     public bool UpdatePlayerData(int id, PlayerData playerData)
     {
         return dbMgr.UpdatePlayerData(id, playerData);

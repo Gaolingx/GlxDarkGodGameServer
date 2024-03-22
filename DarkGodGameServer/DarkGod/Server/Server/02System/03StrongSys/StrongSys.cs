@@ -53,6 +53,9 @@ public class StrongSys
         }
         else
         {
+            //任务进度数据更新
+            TaskSys.Instance.CalcTaskPrgs(pd, TaskConstantsCfg.taskID_03);
+
             //满足条件扣除相应资源
             pd.coin -= nextSd.coin;
             pd.crystal -= nextSd.crystal;

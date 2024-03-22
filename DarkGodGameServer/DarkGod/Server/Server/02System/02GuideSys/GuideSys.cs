@@ -47,7 +47,7 @@ public class GuideSys
             //检测是否为智者点拨任务
             if (pd.guideid == 1001)
             {
-                TaskSys.Instance.CalcTaskPrgs(pd, 1);
+                TaskSys.Instance.CalcTaskPrgs(pd, TaskConstantsCfg.taskID_01);
             }
             pd.guideid += 1;
 

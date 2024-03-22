@@ -32,6 +32,8 @@ namespace PEProtocol
 
         public ReqTakeTaskReward reqTakeTaskReward;
         public RspTakeTaskReward rspTakeTaskReward;
+
+        public PshTaskPrgs pshTaskPrgs;
     }
 
     #region 登录相关
@@ -176,11 +178,19 @@ namespace PEProtocol
     {
         public int rid;
     }
+
+    [Serializable]
     public class RspTakeTaskReward
     {
         public int coin;
         public int lv;
         public int exp;
+        public string[] taskArr;
+    }
+
+    [Serializable]
+    public class PshTaskPrgs
+    {
         public string[] taskArr;
     }
     #endregion
@@ -233,6 +243,9 @@ namespace PEProtocol
         //任务奖励相关
         ReqTakeTaskReward = 210,
         RspTakeTaskReward = 211,
+
+        //任务进度推送相关
+        PshTaskPrgs = 212,
 
     }
 

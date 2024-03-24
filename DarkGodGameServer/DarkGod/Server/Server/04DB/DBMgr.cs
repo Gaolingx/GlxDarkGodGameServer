@@ -73,12 +73,13 @@ public class DBMgr
 
                         guideid = reader.GetInt32("guideid"),
                         time = reader.GetInt64("time"),
+                        fuben = reader.GetInt32("fuben"),
 
                         //TOADD
                     };
 
                     #region Strong Arr
-                    //数据示意：1#2#2#4#3#...7#
+                    //数据示意：1#2#2#4#3#7#   
                     string[] strongStrArr = reader.GetString("strong").Split('#');
 
                     int[] _strongArr = new int[6];
@@ -166,6 +167,7 @@ public class DBMgr
                     strongArr = new int[6],
                     time = TimerSvc.Instance.GetNowTime(),
                     taskArr = new string[6],
+                    fuben = ConstantsCfg.DefaultFubenID,
                     //TOADD
                 };
 
@@ -193,7 +195,7 @@ public class DBMgr
             MySqlCommand cmd = new MySqlCommand(
                 "insert into account set acct=@acct,pass =@pass,name=@name,level=@level,exp=@exp,power=@power,coin=@coin,diamond=@diamond," +
                 "crystal=@crystal,hp = @hp, ad = @ad, ap = @ap, addef = @addef, apdef = @apdef, dodge = @dodge, pierce = @pierce, critical = @critical," +
-                "guideid=@guideid,strong=@strong,time=@time,task=@task", DBconn);
+                "guideid=@guideid,strong=@strong,time=@time,task=@task,fuben=@fuben", DBconn);
             cmd.Parameters.AddWithValue("acct", acct);
             cmd.Parameters.AddWithValue("pass", pass);
             cmd.Parameters.AddWithValue("name", pd.name);
@@ -233,6 +235,7 @@ public class DBMgr
                 taskInfo += "#";
             }
             cmd.Parameters.AddWithValue("task", taskInfo);
+            cmd.Parameters.AddWithValue("fuben", pd.fuben);
 
             //TOADD
             cmd.ExecuteNonQuery();
@@ -283,7 +286,7 @@ public class DBMgr
             MySqlCommand cmd = new MySqlCommand(
             "update account set name=@name,level=@level,exp=@exp,power=@power,coin=@coin,diamond=@diamond,crystal=@crystal," +
             "hp = @hp, ad = @ad, ap = @ap, addef = @addef, apdef = @apdef, dodge = @dodge, pierce = @pierce, critical = @critical," +
-            "guideid=@guideid,strong=@strong,time=@time,task=@task where id =@id", DBconn);
+            "guideid=@guideid,strong=@strong,time=@time,task=@task,fuben=@fuben where id =@id", DBconn);
             cmd.Parameters.AddWithValue("id", id);
             cmd.Parameters.AddWithValue("name", playerData.name);
             cmd.Parameters.AddWithValue("level", playerData.lv);
@@ -320,6 +323,7 @@ public class DBMgr
                 taskInfo += "#";
             }
             cmd.Parameters.AddWithValue("task", taskInfo);
+            cmd.Parameters.AddWithValue("fuben", playerData.fuben);
 
             //TOADD Others
             cmd.ExecuteNonQuery();

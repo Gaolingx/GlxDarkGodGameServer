@@ -77,6 +77,7 @@ namespace PEProtocol
         public long time;
 
         public string[] taskArr;
+        public int fuben;//记录关卡信息
         //TOADD
     }
 

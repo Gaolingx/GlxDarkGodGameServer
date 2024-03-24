@@ -58,12 +58,12 @@ public class BuySys
                 case 0:
                     pd.power += bc.amountEachPurchase;
                     //任务进度数据更新
-                    pshTaskPrgs = TaskSys.Instance.GetTaskPrgs(pd, TaskConstantsCfg.taskID_04);
+                    pshTaskPrgs = TaskSys.Instance.GetTaskPrgs(pd, ConstantsCfg.taskID_04);
                     break;
                 case 1:
                     pd.coin += bc.amountEachPurchase;
                     //任务进度数据更新
-                    pshTaskPrgs = TaskSys.Instance.GetTaskPrgs(pd, TaskConstantsCfg.taskID_05);
+                    pshTaskPrgs = TaskSys.Instance.GetTaskPrgs(pd, ConstantsCfg.taskID_05);
                     break;
 
             }

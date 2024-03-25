@@ -36,11 +36,40 @@ public class FubenSys
             cmd = (int)CMD.RspFBFight
         };
 
-        //1.检测体力是否满足要求
-        //2.检测副本id是否有效
         PlayerData pd = cacheSvc.GetPlayerDataBySession(pack.session);
         int powerInMission = cfgSvc.GetMapCfg(data.fbid).power;
-        //3.扣除相应体力
-        //4.将消息发回客户端，开始战斗
+
+        //1.判断关卡是否符合需求
+        if (pd.fuben < data.fbid) //pd.fuben代表玩家副本战斗进度
+        {
+            msg.err = (int)ErrorCode.ClientDataError;
+        }
+        //2.判断体力是否满足要求
+        else if(pd.power < powerInMission)
+        {
+            msg.err = (int)ErrorCode.LackPower;
+        }
+        //3.数据合法，扣除消耗体力
+        else
+        {
+            pd.power -= powerInMission;
+            //4.更新玩家数据至DB
+            if(cacheSvc.UpdatePlayerData(pd.id, pd))
+            {
+                //5.更新数据库成功，将消息发回客户端，开始战斗
+                RspFBFight rspFBFight = new RspFBFight
+                {
+                    fbid = data.fbid,
+                    power = pd.power
+                };
+                msg.rspFBFight = rspFBFight;
+            }
+            else
+            {
+                //6.更新数据库失败，将消息发回客户端，提示错误码
+                msg.err = (int)ErrorCode.UpdateDBError;
+            }
+        }
+        pack.session.SendMsg(msg);
     }
 }

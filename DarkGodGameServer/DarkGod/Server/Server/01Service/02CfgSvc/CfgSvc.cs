@@ -274,7 +274,7 @@ public class CfgSvc
     private void InitMapCfg()
     {
         XmlDocument doc = new XmlDocument();
-        doc.Load(@"D:\SyncTuts\DarkGod\Client\Assets\Resources\ResCfgs\map.xml");
+        doc.Load(@"F:\GitHub\GlxDarkGodGameServer\DarkGodGameServer\DarkGod\Server\ServerCfg\map.xml");
 
         XmlNodeList nodLst = doc.SelectSingleNode("root").ChildNodes;
 

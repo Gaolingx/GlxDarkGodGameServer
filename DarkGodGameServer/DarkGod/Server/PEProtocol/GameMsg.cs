@@ -34,6 +34,9 @@ namespace PEProtocol
         public RspTakeTaskReward rspTakeTaskReward;
 
         public PshTaskPrgs pshTaskPrgs;
+
+        public ReqFBFight reqFBFight;
+        public RspFBFight rspFBFight;
     }
 
     #region 登录相关
@@ -172,6 +175,19 @@ namespace PEProtocol
     }
     #endregion
 
+    #region 副本战斗相关
+    [Serializable]
+    public class ReqFBFight
+    {
+        public int fbid;
+    }
+    [Serializable]
+    public class RspFBFight
+    {
+        public int fbid;
+        public int power;
+    }
+    #endregion
 
     #region 任务奖励相关
     [Serializable]
@@ -210,6 +226,7 @@ namespace PEProtocol
         LackCoin,//金币不够
         LackCrystal,//水晶不够
         LackDiamond,//钻石不够
+        LackPower,//体力不足
     }
 
     public enum CMD
@@ -247,6 +264,10 @@ namespace PEProtocol
 
         //任务进度推送相关
         PshTaskPrgs = 212,
+
+        //副本战斗相关 300
+        ReqFBFight = 301,
+        RspFBFight = 302,
 
     }
 

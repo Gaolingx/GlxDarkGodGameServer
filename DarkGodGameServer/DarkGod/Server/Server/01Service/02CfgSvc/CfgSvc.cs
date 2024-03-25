@@ -24,6 +24,7 @@ public class CfgSvc
         InitStrongCfg();
         InitBuyCfg();
         InitTaskRewrdCfg();
+        InitMapCfg();
         PECommon.Log("CfgSvc Init Done.");
     }
 
@@ -268,6 +269,57 @@ public class CfgSvc
     }
     #endregion
 
+    #region 地图配置
+    private Dictionary<int, MapCfg> mapDic = new Dictionary<int, MapCfg>();
+    private void InitMapCfg()
+    {
+        XmlDocument doc = new XmlDocument();
+        doc.Load(@"D:\SyncTuts\DarkGod\Client\Assets\Resources\ResCfgs\map.xml");
+
+        XmlNodeList nodLst = doc.SelectSingleNode("root").ChildNodes;
+
+        for (int i = 0; i < nodLst.Count; i++)
+        {
+            XmlElement ele = nodLst[i] as XmlElement;
+
+            if (ele.GetAttributeNode("ID") == null)
+            {
+                continue;
+            }
+            int ID = Convert.ToInt32(ele.GetAttributeNode("ID").InnerText);
+            MapCfg mc = new MapCfg
+            {
+                ID = ID
+            };
+
+            foreach (XmlElement e in nodLst[i].ChildNodes)
+            {
+                switch (e.Name)
+                {
+                    case "power":
+                        mc.power = int.Parse(e.InnerText);
+                        break;
+                }
+            }
+            mapDic.Add(ID, mc);
+        }
+        PECommon.Log("MapCfg Init Done.");
+
+    }
+    public MapCfg GetMapCfg(int id)
+    {
+        MapCfg mc = null;
+        if (mapDic.TryGetValue(id, out mc))
+        {
+            return mc;
+        }
+        return null;
+    }
+    #endregion
+
+
+    #region BaseData
+
     public class GuideCfg : BaseData<GuideCfg>
     {
         public int coin;
@@ -305,8 +357,14 @@ public class CfgSvc
         public bool taked;
     }
 
+    public class MapCfg : BaseData<MapCfg>
+    {
+        public int power;
+    }
+
     public class BaseData<T>
     {
         public int ID;
     }
+    #endregion
 }

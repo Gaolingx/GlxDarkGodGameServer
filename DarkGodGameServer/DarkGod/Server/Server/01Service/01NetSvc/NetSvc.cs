@@ -100,6 +100,9 @@ public class NetSvc
             case CMD.ReqTakeTaskReward:
                 TaskSys.Instance.ReqTakeTaskReward(pack);
                 break;
+            case CMD.ReqFBFight:
+                FubenSys.Instance.ReqFBFight(pack);
+                break;
         }
     }
 }

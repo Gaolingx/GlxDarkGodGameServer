@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
@@ -6,9 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="PESocket">
-      <HintPath>..\Libs\PESocket.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\PESocket\PESocket.csproj" />
   </ItemGroup>
 
 </Project>

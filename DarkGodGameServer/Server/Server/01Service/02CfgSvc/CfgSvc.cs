@@ -33,7 +33,8 @@ public class CfgSvc
     private void InitGuideCfg()
     {
         XmlDocument doc = new XmlDocument();
-        doc.Load(@"F:\GitHub\GlxDarkGodGameServer\DarkGodGameServer\DarkGod\Server\ServerCfg\guide.xml");     //根据配置文件本地路径修改
+        //TODO:这一部分暂时为硬编码
+        doc.Load(@"F:\GitHub\GlxDarkGodGameServer\DarkGodGameServer\Server\ServerCfg\guide.xml");     //根据配置文件本地路径修改
 
         XmlNodeList nodLst = doc.SelectSingleNode("root").ChildNodes;
 
@@ -84,7 +85,7 @@ public class CfgSvc
     private void InitStrongCfg()
     {
         XmlDocument doc = new XmlDocument();
-        doc.Load(@"F:\GitHub\GlxDarkGodGameServer\DarkGodGameServer\DarkGod\Server\ServerCfg\strong.xml");
+        doc.Load(@"F:\GitHub\GlxDarkGodGameServer\DarkGodGameServer\Server\ServerCfg\strong.xml");
 
         XmlNodeList nodLst = doc.SelectSingleNode("root").ChildNodes;
 
@@ -169,7 +170,7 @@ public class CfgSvc
     private void InitBuyCfg()
     {
         XmlDocument doc = new XmlDocument();
-        doc.Load(@"F:\GitHub\GlxDarkGodGameServer\DarkGodGameServer\DarkGod\Server\ServerCfg\buyCfg.xml");     //根据配置文件本地路径修改
+        doc.Load(@"F:\GitHub\GlxDarkGodGameServer\DarkGodGameServer\Server\ServerCfg\buyCfg.xml");     //根据配置文件本地路径修改
 
         XmlNodeList nodLst = doc.SelectSingleNode("root").ChildNodes;
 
@@ -220,7 +221,7 @@ public class CfgSvc
     private void InitTaskRewrdCfg()
     {
         XmlDocument doc = new XmlDocument();
-        doc.Load(@"F:\GitHub\GlxDarkGodGameServer\DarkGodGameServer\DarkGod\Server\ServerCfg\taskreward.xml");
+        doc.Load(@"F:\GitHub\GlxDarkGodGameServer\DarkGodGameServer\Server\ServerCfg\taskreward.xml");
 
         XmlNodeList nodLst = doc.SelectSingleNode("root").ChildNodes;
 
@@ -274,7 +275,7 @@ public class CfgSvc
     private void InitMapCfg()
     {
         XmlDocument doc = new XmlDocument();
-        doc.Load(@"F:\GitHub\GlxDarkGodGameServer\DarkGodGameServer\DarkGod\Server\ServerCfg\map.xml");
+        doc.Load(@"F:\GitHub\GlxDarkGodGameServer\DarkGodGameServer\Server\ServerCfg\map.xml");
 
         XmlNodeList nodLst = doc.SelectSingleNode("root").ChildNodes;
 

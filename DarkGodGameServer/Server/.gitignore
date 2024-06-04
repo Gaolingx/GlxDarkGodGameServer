@@ -398,4 +398,4 @@ FodyWeavers.xsd
 *.sln.iml
 
 # Custom Rule
-[Bb]Build/
+[Bb]uild/

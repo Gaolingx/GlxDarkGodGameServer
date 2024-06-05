@@ -2,6 +2,7 @@
 
 
 using PEProtocol;
+using static CfgSvc;
 
 public class FubenSys
 {
@@ -45,7 +46,7 @@ public class FubenSys
             msg.err = (int)ErrorCode.ClientDataError;
         }
         //2.判断体力是否满足要求
-        else if(pd.power < powerInMission)
+        else if (pd.power < powerInMission)
         {
             msg.err = (int)ErrorCode.LackPower;
         }
@@ -54,7 +55,7 @@ public class FubenSys
         {
             pd.power -= powerInMission;
             //4.更新玩家数据至DB
-            if(cacheSvc.UpdatePlayerData(pd.id, pd))
+            if (cacheSvc.UpdatePlayerData(pd.id, pd))
             {
                 //5.更新数据库成功，将消息发回客户端，开始战斗
                 RspFBFight rspFBFight = new RspFBFight
@@ -89,12 +90,52 @@ public class FubenSys
             if (data.costtime > 0 && data.resthp > 0)
             {
                 //根据副本ID获取相应奖励
+                MapCfg rd = cfgSvc.GetMapCfg(data.fbid);
+                PlayerData pd = cacheSvc.GetPlayerDataBySession(pack.session);
 
+                pd.coin += rd.coin;
+                pd.crystal += rd.crystal;
+                PECommon.CalcExp(pd, rd.exp);
+
+                //更新副本进度id
+                //判断关卡是否重复
+                if (pd.fuben == data.fbid)
+                {
+                    pd.fuben += 1;
+                }
+
+                //更新奖励数据到玩家数据库
+                if (!cacheSvc.UpdatePlayerData(pd.id, pd))
+                {
+                    msg.err = (int)ErrorCode.UpdateDBError;
+                }
+                else
+                {
+                    //发送玩家数据、副本奖励数据
+                    RspFBFightEnd rspFBFightEnd = new RspFBFightEnd
+                    {
+                        win = data.win,
+                        fbid = data.fbid,
+                        resthp = data.resthp,
+                        costtime = data.costtime,
+
+                        coin = pd.coin,
+                        lv = pd.lv,
+                        exp = pd.exp,
+                        crystal = pd.crystal,
+                        fuben = pd.fuben
+                    };
+
+                    msg.rspFBFightEnd = rspFBFightEnd;
+                }
             }
+
         }
         else
         {
             msg.err = (int)ErrorCode.ClientDataError;
         }
+
+        pack.session.SendMsg(msg);
     }
 }

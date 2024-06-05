@@ -72,4 +72,29 @@ public class FubenSys
         }
         pack.session.SendMsg(msg);
     }
+
+    public void ReqFBFightEnd(MsgPack pack)
+    {
+        ReqFBFightEnd data = pack.msg.reqFBFightEnd;
+
+        GameMsg msg = new GameMsg
+        {
+            cmd = (int)CMD.RspFBFightEnd
+
+        };
+
+        //校验战斗是否合法
+        if (data.win)
+        {
+            if (data.costtime > 0 && data.resthp > 0)
+            {
+                //根据副本ID获取相应奖励
+
+            }
+        }
+        else
+        {
+            msg.err = (int)ErrorCode.ClientDataError;
+        }
+    }
 }

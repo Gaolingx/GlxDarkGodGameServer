@@ -300,6 +300,15 @@ public class CfgSvc
                     case "power":
                         mc.power = int.Parse(e.InnerText);
                         break;
+                    case "coin":
+                        mc.coin = int.Parse(e.InnerText);
+                        break;
+                    case "exp":
+                        mc.exp = int.Parse(e.InnerText);
+                        break;
+                    case "crystal":
+                        mc.crystal = int.Parse(e.InnerText);
+                        break;
                 }
             }
             mapDic.Add(ID, mc);
@@ -361,6 +370,9 @@ public class CfgSvc
     public class MapCfg : BaseData<MapCfg>
     {
         public int power;
+        public int coin;
+        public int exp;
+        public int crystal;
     }
 
     public class BaseData<T>

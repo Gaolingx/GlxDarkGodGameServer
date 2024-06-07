@@ -93,6 +93,9 @@ public class FubenSys
                 MapCfg rd = cfgSvc.GetMapCfg(data.fbid);
                 PlayerData pd = cacheSvc.GetPlayerDataBySession(pack.session);
 
+                //任务进度数据更新
+                TaskSys.Instance.CalcTaskPrgs(pd, ConstantsCfg.taskID_02);
+
                 pd.coin += rd.coin;
                 pd.crystal += rd.crystal;
                 PECommon.CalcExp(pd, rd.exp);

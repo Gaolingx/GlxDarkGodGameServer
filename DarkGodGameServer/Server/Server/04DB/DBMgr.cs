@@ -19,14 +19,48 @@ public class DBMgr
             return instance;
         }
     }
+
     //定义数据库连接
     private MySqlConnection? DBconn;
+    private string connectionString = "server=localhost;User Id = root;password=Gao123456;Database=darkgod;Charset = utf8mb3";
 
     public void Init()
     {
-        DBconn = new MySqlConnection("server=localhost;User Id = root;password=Gao123456;Database=darkgod;Charset = utf8mb3");
-        DBconn.Open();
-        PECommon.Log("DBMgr Init Done.");
+        TestConnectDB();
+    }
+
+    private void TestConnectDB()
+    {
+        try
+        {
+            ConnectDB(connectionString);
+            DBconn?.Close();
+            PECommon.Log("DBMgr Init Done.");
+        }
+        catch (MySqlException ex)
+        {
+            PECommon.Log("DBMgr Init Error:" + ex, PELogType.Error);
+        }
+    }
+
+    public MySqlConnection ConnectDB(string connectionString)
+    {
+        MySqlConnection connection = new MySqlConnection(connectionString);
+
+        try
+        {
+            connection.Open();
+
+        }
+        catch (MySqlException ex) when (ex.Number == 0 && ex.InnerException is MySqlException innerEx && innerEx.Number == 2006)
+        {
+            // 尝试重连
+            connection.Close(); // 关闭当前失效的连接
+            connection.Open(); // 尝试重新打开连接
+
+        }
+
+        return connection;
     }
 
 
@@ -40,6 +74,7 @@ public class DBMgr
 
         try
         {
+            DBconn = ConnectDB(connectionString);
             MySqlCommand cmd = new MySqlCommand("select * from account where acct = @acct", DBconn);
             cmd.Parameters.AddWithValue("acct", acct);
             reader = cmd.ExecuteReader();
@@ -183,6 +218,8 @@ public class DBMgr
                 playerData.id = InsertNewAcctData(acct, pass, playerData);
             }
         }
+
+        DBconn?.Close();
         return playerData;
     }
 
@@ -192,6 +229,7 @@ public class DBMgr
         int id = -1;
         try
         {
+            DBconn = ConnectDB(connectionString);
             MySqlCommand cmd = new MySqlCommand(
                 "insert into account set acct=@acct,pass =@pass,name=@name,level=@level,exp=@exp,power=@power,coin=@coin,diamond=@diamond," +
                 "crystal=@crystal,hp = @hp, ad = @ad, ap = @ap, addef = @addef, apdef = @apdef, dodge = @dodge, pierce = @pierce, critical = @critical," +
@@ -246,6 +284,7 @@ public class DBMgr
             PECommon.Log("Insert PlayerData Error:" + e, PELogType.Error);
         }
 
+        DBconn?.Close();
         return id;
     }
 
@@ -255,6 +294,7 @@ public class DBMgr
         MySqlDataReader? reader = null;
         try
         {
+            DBconn = ConnectDB(connectionString);
             MySqlCommand cmd = new MySqlCommand("select * from account where name= @name", DBconn);
             cmd.Parameters.AddWithValue("name", name);
             reader = cmd.ExecuteReader();
@@ -275,6 +315,7 @@ public class DBMgr
             }
         }
 
+        DBconn?.Close();
         return exist;
     }
 
@@ -282,6 +323,7 @@ public class DBMgr
     {
         try
         {
+            DBconn = ConnectDB(connectionString);
             //更新玩家数据
             MySqlCommand cmd = new MySqlCommand(
             "update account set name=@name,level=@level,exp=@exp,power=@power,coin=@coin,diamond=@diamond,crystal=@crystal," +
@@ -333,7 +375,8 @@ public class DBMgr
             PECommon.Log("Update PlayerData Error:" + e, PELogType.Error);
             return false;
         }
-
+        
+        DBconn?.Close();
         return true;
     }
 }
